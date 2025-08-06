@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <!-- Navigation -->
     <b-container class="mt-5 mb-5">
       <b-navbar class="mb-2">
@@ -22,9 +21,9 @@ export default {
   components: {},
   methods: {
     isActive(name: string) {
-      return this.$route.name === name;
-    }
-  }
+      return this.$route.name === name
+    },
+  },
 }
 </script>
 

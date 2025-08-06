@@ -1,7 +1,6 @@
 <template>
   <div v-if="task">
     <b-form class="mt-5" @submit="submit">
-
       <!-- Title field -->
       <b-form-group label="Title" description="What exactly do you want to do repeatedly?">
         <b-form-input v-model="task.title" placeholder="Enter title" required />
@@ -13,20 +12,18 @@
       </b-form-group>
 
       <!-- Button -->
-      <b-button v-if="!isLoading" type="submit" variant="outline-primary">
-        Save
-      </b-button>
-      <b-spinner v-else variant="primary" key="primary" type="grow" />
+      <b-button v-if="!isLoading" type="submit" variant="outline-primary"> Save </b-button>
+      <b-spinner v-else key="primary" variant="primary" type="grow" />
     </b-form>
   </div>
 </template>
 
 <script lang="ts">
-import tasksService, { type Task } from '../services/tasks';
+import tasksService, { type Task } from '../services/tasks'
 
 type EditComponentState = {
-  task: Task | null;
-  isLoading: boolean;
+  task: Task | null
+  isLoading: boolean
 }
 
 export default {
@@ -51,39 +48,37 @@ export default {
         { value: 6, text: 6 },
         { value: 7, text: 7 },
       ]
-    }
+    },
+  },
+
+  async mounted() {
+    this.task = await tasksService.getTask(this.$route.params.id as string)
   },
 
   methods: {
     async submit(event: Event) {
-      if (!this.task) return;
+      if (!this.task) return
 
-      event.preventDefault();
+      event.preventDefault()
 
       const data = {
         title: this.task.title,
         frequency: this.task.frequency,
-      };
+      }
 
-      this.isLoading = true;
+      this.isLoading = true
 
       try {
-        await tasksService.updateTask(String(this.task.id), data);
+        await tasksService.updateTask(String(this.task.id), data)
         await this.$router.push({
           name: 'habits',
         })
       } catch (ex) {
         console.log(ex)
       } finally {
-        this.isLoading = false;
+        this.isLoading = false
       }
-
-    }
-  },
-
-  async mounted() {
-    this.task = await tasksService.getTask(this.$route.params.id as string);
-
+    },
   },
 }
 </script>
