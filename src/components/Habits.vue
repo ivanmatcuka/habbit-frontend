@@ -2,44 +2,24 @@
   <div>
 
     <!-- Modal -->
-    <b-modal id="modal-create" hide-footer>
+    <b-modal id="modal-create" hide-footer v-model="modal">
       <b-form @submit="submit">
 
         <!-- Title field -->
-        <b-form-group
-          label="Title"
-          description="What exactly do you want to do repeatedly?"
-        >
-          <b-form-input
-            v-model="title"
-            placeholder="Enter title"
-            required
-          />
+        <b-form-group label="Title" description="What exactly do you want to do repeatedly?">
+          <b-form-input v-model="title" placeholder="Enter title" required />
         </b-form-group>
 
         <!-- Frequency -->
-        <b-form-group
-          label="Frequency"
-          description="How many times per week do you want to do this?"
-        >
-          <b-form-select v-model="frequency" :options="options" required/>
+        <b-form-group label="Frequency" description="How many times per week do you want to do this?">
+          <b-form-select v-model="frequency" :options="options" required />
         </b-form-group>
 
         <!-- Button -->
-        <b-button
-          v-if="!isLoading"
-          type="submit"
-          variant="outline-primary"
-          class="font-weight-bold"
-        >
+        <b-button v-if="!isLoading" type="submit" variant="outline-primary" class="font-weight-bold">
           Save
         </b-button>
-        <b-spinner
-          v-else
-          variant="primary"
-          key="primary"
-          type="grow"
-        />
+        <b-spinner v-else variant="primary" key="primary" type="grow" />
       </b-form>
     </b-modal>
 
@@ -51,31 +31,28 @@
     <!-- List -->
     <b-list-group>
 
-      <b-list-group-item
-        v-for="task in tasks"
-        v-bind:key="task.id"
-        class="d-flex align-items-center justify-content-between"
-      >
+      <b-list-group-item v-for="task in tasks" v-bind:key="task.id"
+        class="d-flex align-items-center justify-content-between">
 
-          <!-- Title -->
-          <div>{{ task.title }}: {{ getFrequencyString(task.frequency) }}</div>
+        <!-- Title -->
+        <div>{{ task.title }}: {{ getFrequencyString(task.frequency) }}</div>
 
-          <!-- Buttons -->
-          <div>
+        <!-- Buttons -->
+        <div>
 
-            <!-- Edit -->
-            <router-link :to="{ name: 'edit', params: { id: task.id } }">
-              <b-button variant="secondary" class="mr-2">
-                <b-icon icon="pencil-square" />
-              </b-button>
-            </router-link>
-
-            <!-- Delete -->
-            <b-button variant="danger" @click="openDeleteModal(task.id)">
-              <b-icon icon="trash-fill" />
+          <!-- Edit -->
+          <router-link :to="`/edit/${task.id}`">
+            <b-button variant="secondary" class="mr-2">
+              <b-icon icon="pencil-square" />
             </b-button>
+          </router-link>
 
-          </div>
+          <!-- Delete -->
+          <b-button variant="danger" @click="openDeleteModal(task.id)">
+            <b-icon icon="trash-fill" />
+          </b-button>
+
+        </div>
 
       </b-list-group-item>
 
@@ -87,65 +64,59 @@
   </div>
 </template>
 
-<script>
-import tasksService from '@/services/tasks'
+<script lang="ts">
+import tasksService, { type Task } from '@/services/tasks'
+
+
+type HabitsPageState = {
+  isLoading: boolean,
+  title: string,
+  frequency: number | null,
+  tasks: Task[],
+  selectedTaskId: number | null,
+  modal: boolean,
+}
 
 export default {
-  name: 'Habits',
+  name: 'HabitsPage',
   components: {},
 
-  data() {
+  data(): HabitsPageState {
     return {
       isLoading: false,
       title: '',
       frequency: null,
       tasks: [],
-      selectedTask: null,
+      selectedTaskId: null,
+      modal: false,
     }
   },
 
   computed: {
-    /**
-     * Returns frequency options.
-     *
-     * @returns {({text: number, value: number})[]}
-     */
     options() {
       return [
-        { value: 1, text: 1},
-        { value: 2, text: 2},
-        { value: 3, text: 3},
-        { value: 4, text: 4},
-        { value: 5, text: 5},
-        { value: 6, text: 6},
-        { value: 7, text: 7},
+        { value: 1, text: 1 },
+        { value: 2, text: 2 },
+        { value: 3, text: 3 },
+        { value: 4, text: 4 },
+        { value: 5, text: 5 },
+        { value: 6, text: 6 },
+        { value: 7, text: 7 },
       ]
     }
   },
 
   methods: {
-    /**
-     * Opens the delete modal.
-     *
-     * @param {number} id - Selected task ID.
-     * @return {void}
-     */
-    openDeleteModal(id) {
-      this.$bvModal.show('modal-delete');
-      this.selectedTask = id;
+    openDeleteModal(id: number) {
+      this.selectedTaskId = id;
     },
 
     openCreateModal() {
-      this.$bvModal.show('modal-create');
+      this.modal = !this.modal
     },
 
-    /**
-     * Resets the selected task.
-     *
-     * @return {void}
-     */
     cancelDelete() {
-      this.selectedTask = null;
+      this.selectedTaskId = null;
     },
 
     /**
@@ -154,24 +125,21 @@ export default {
      * @return {Promise<void>}
      */
     async confirmDelete() {
-      if (!this.selectedTask) {
+      if (!this.selectedTaskId) {
         return;
       }
 
       try {
-        await tasksService.deleteTask(this.selectedTask);
+        await tasksService.deleteTask(this.selectedTaskId);
       } catch (ex) {
         console.log(ex);
       }
 
-      this.tasks = this.tasks.filter((task) => task.id !== this.selectedTask);
-      this.selectedTask = null;
+      this.tasks = this.tasks.filter((task) => task.id !== this.selectedTaskId);
+      this.selectedTaskId = null;
     },
 
-    /**
-     * Generates frequency strings.
-     */
-    getFrequencyString(n) {
+    getFrequencyString(n: number) {
       let times = 'time';
 
       if (n !== 1) {
@@ -181,13 +149,7 @@ export default {
       return `${n} ${times} per week`;
     },
 
-    /**
-     * Submits the form to add a task.
-     * 
-     * @param {any} event - Event object.
-     * @return {Promise<void>}
-     */
-    async submit(event) {
+    async submit(event: Event) {
       event.preventDefault();
 
       const data = {
@@ -200,18 +162,12 @@ export default {
         this.tasks = [result, ...this.tasks];
       } catch (ex) {
         console.error(ex);
-      } finally {
-        this.$bvModal.hide('modal-create');
       }
     },
   },
-  
+
   async mounted() {
-    try {
-      this.tasks = await tasksService.getTasks();
-    } catch (ex) {
-      console.log(ex);
-    }
+    this.tasks = await tasksService.getTasks();
   }
 }
 </script>

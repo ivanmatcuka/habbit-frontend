@@ -29,10 +29,8 @@
           <div>{{ task.title }}</div>
 
           <!-- Buttons -->
-          <div>
-            <b-button variant="success" class="mr-2" @click="completeTask(task.id)">
-              <b-icon icon="app" />
-            </b-button>
+          <div class="mr-2" @click="completeTask(task.id)">
+            <IFa7SolidCircleNotch />
           </div>
 
         </b-list-group-item>
@@ -54,10 +52,8 @@
           <div>{{ task.title }}</div>
 
           <!-- Buttons -->
-          <div>
-            <b-button variant="secondary" class="mr-2" @click="uncompleteTask(task)">
-              <b-icon icon="check2-square" />
-            </b-button>
+          <div class="mr-2" @click="uncompleteTask(task)">
+            <IFa7SolidCheck />
           </div>
 
         </b-list-group-item>
@@ -67,17 +63,20 @@
 </template>
 
 <script lang="ts">
-// Services
-import tasksService from '../services/tasks';
-
-// Libs
+import { defineComponent } from 'vue';
+import tasksService, { type Task } from '../services/tasks';
 import moment from 'moment';
 
-export default {
+type HomePageState = {
+  tasks: Task[];
+  date: ReturnType<typeof moment>;
+}
+
+export default defineComponent({
   name: 'HomePage',
   components: {},
 
-  data() {
+  data(): HomePageState {
     return {
       tasks: [],
       date: moment(),
@@ -87,7 +86,7 @@ export default {
   methods: {
     async completeTask(id: number) {
       try {
-        await tasksService.completeTask(id, {
+        await tasksService.completeTask(String(id), {
           'completed_at': this.date.format('YYYY-MM-DD HH:mm:ss'),
         });
         this.fetchTasks();
@@ -96,106 +95,51 @@ export default {
       }
     },
 
-    /**
-     * Uncompletes the task.
-     *
-     * @param {number} task - Task object.
-     * @return {Promise<void>}
-     */
-    async uncompleteTask(task) {
+    async uncompleteTask(task: Task) {
       const completion = task.completions.find((completion) => {
         return moment(completion.completed_at).isSame(this.date, 'day');
       });
 
       if (completion) {
-        try {
-          await tasksService.uncompleteTask(completion.id);
-          this.fetchTasks();
-        } catch (ex) {
-          console.error(ex);
-        }
+        await tasksService.uncompleteTask(String(completion.id));
+        this.fetchTasks();
       }
 
     },
 
-    /**
-     * Fetches all tasks.
-     *
-     * @return {Promise<any>}
-     */
     async fetchTasks() {
-      try {
-        this.tasks = await tasksService.getTasks();
-      } catch (ex) {
-        console.error(ex);
-      }
+      this.tasks = await tasksService.getTasks();
     },
 
-    /**
-     * Goes one day backward.
-     *
-     * @return {void}
-     */
     goDayBack() {
       this.date = this.date.clone().subtract(1, 'days');
     },
 
-    /**
-     * Goes one day forward.
-     *
-     * @return {void}
-     */
     goDayForward() {
       this.date = this.date.clone().add(1, 'days');
     },
   },
 
   computed: {
-    /**
-     * Returns completed tasks.
-     *
-     * @return {any[]}
-     */
     completedTasks() {
-      return this.tasks.filter((task) => {
-        return task.completions.some((completion) => {
-          return moment(completion.completed_at).isSame(this.date, 'day');
-        });
-      });
+      return this.tasks.filter((task) => task.completions.some((completion) => {
+        return moment(completion.completed_at).isSame(this.date, 'day');
+      }));
     },
 
-    /**
-     * Returns uncompleted tasks.
-     *
-     * @return {any[]}
-     */
     uncompletedTasks() {
       const completedIds = this.completedTasks.map(task => task.id);
 
-      return this.tasks.filter((task) => {
-        return !completedIds.includes(task.id);
-      });
+      return this.tasks.filter((task) => !completedIds.includes(task.id));
     },
 
-    /**
-     * Checks if there are days in the future.
-     *
-     * @return {boolean}
-     */
     canGoForward() {
       return moment().diff(this.date, 'days') > 0;
     }
   },
 
-  /**
-   * Fires once mounted.
-   */
   async mounted() {
-    try {
-      this.fetchTasks();
-    } catch (ex) {
-      console.log(ex);
-    }
+    this.fetchTasks();
   },
-}
+})
 </script>

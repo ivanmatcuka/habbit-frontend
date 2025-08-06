@@ -1,84 +1,59 @@
 import axios from 'axios'
+import api from '../utils/api';
 
 const BASE_URL = 'http://localhost:8000';
 
+export interface Completion {
+  id: number;
+  task_id: number;
+  completed_at: string; // ISO Date string (YYYY-MM-DD)
+  created_at: string;   // ISO DateTime string
+  updated_at: string;   // ISO DateTime string
+}
+
+export interface Task {
+  id: number;
+  title: string;
+  frequency: number;
+  created_at: string;   // ISO DateTime string
+  updated_at: string;   // ISO DateTime string
+  completions: Completion[];
+}
+
 export default {
-  /**
-   * Fetches all tasks.
-   *
-   * @return {Promise<any>}
-   */
-  async getTasks() {
-    const response = await axios.get(`${BASE_URL}/tasks`);
-
-    return response.data;
+  async getTasks(): Promise<Task[]> {
+    return await api.get<Task[]>('tasks') ?? [];
   },
 
-  /**
-   * Fetches the task.
-   *
-   * @param {number} id - Task ID.
-   * @return {Promise<any>}
-   */
-  async getTask(id) {
-    const response = await axios.get(`${BASE_URL}/tasks/${id}`);
-
-    return response.data;
+  async getTask(id: string) {
+    return await api.get<Task>(`tasks/${id}`);
   },
 
-  /**
-   * Deletes the task.
-   *
-   * @param {number} id - Task ID.
-   * @return {Promise<any>}
-   */
-  async deleteTask(id) {
+  async deleteTask(id: string) {
     const response = await axios.delete(`${BASE_URL}/tasks/${id}`)
 
     return response.data;
   },
 
-  /**
-   * Updates the task.
-   *
-   * @param {number} id - Task ID.
-   * @param {any} data - Task data.
-   * @return {Promise<any>}
-   */
-  async updateTask(id, data) {
+  async updateTask(id: string, data: unknown) {
     const response = await axios.patch(`${BASE_URL}/tasks/${id}`, data);
 
     return response.data;
   },
 
-  /**
-   * Completes the task.
-   */
-  async completeTask(id: number, data: unknown) {
+  async completeTask(id: string, data: unknown) {
     const response = await axios.post(`${BASE_URL}/complete/${id}`, data);
 
     return response.data;
   },
 
-  /**
-   * Uncompletes the task by completion ID.
-   *
-   * @param {number} id - Completion ID.
-   * @return {Promise<any>}
-   */
-  async uncompleteTask(id) {
+  async uncompleteTask(id:string) {
     const response = await axios.delete(`${BASE_URL}/completions/${id}`);
 
     return response.data;
   },
 
-  /**
-   * Creates a task.
-   *
-   * @param {any} data - Task data.
-   * @return {Promise<any>}
-   */
-  async createTask(data) {
+  async createTask(data: unknown) {
     const response = await axios.post(`${BASE_URL}/tasks`, data)
 
     return response.data;

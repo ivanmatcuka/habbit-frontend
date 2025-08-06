@@ -5,10 +5,10 @@
     <b-container class="mt-5 mb-5">
       <b-navbar class="mb-2">
         <b-nav-item :active="isActive('home')" class="font-weight-bold">
-          <router-link to="home">Dashboard</router-link>
+          <router-link to="/">Dashboard</router-link>
         </b-nav-item>
         <b-nav-item :active="isActive('habits')" class="font-weight-bold">
-          <router-link to="habits">Habits</router-link>
+          <router-link to="/habits">Habits</router-link>
         </b-nav-item>
       </b-navbar>
       <router-view />
