@@ -19,21 +19,9 @@
       <!-- Heading -->
       <h2>Uncompleted tasks</h2>
 
-      <b-list-group>
-        <b-list-group-item
-          v-for="task in uncompletedTasks"
-          :key="task.id"
-          class="d-flex align-items-center justify-content-between"
-        >
-          <!-- Title -->
-          <div>{{ task.title }}</div>
-
-          <!-- Buttons -->
-          <div class="mr-2" @click="completeTask(task.id)">
-            <IFa7SolidCircleNotch />
-          </div>
-        </b-list-group-item>
-      </b-list-group>
+      <div class="d-flex flex-column gap-2">
+        <todo-item v-for="task in uncompletedTasks" :key="task.id" :done="true" :task="task" />
+      </div>
     </div>
 
     <!-- List of complete tasks -->
@@ -41,21 +29,9 @@
       <!-- Heading -->
       <h2>Completed tasks</h2>
 
-      <b-list-group>
-        <b-list-group-item
-          v-for="task in completedTasks"
-          :key="task.id"
-          class="d-flex align-items-center justify-content-between"
-        >
-          <!-- Title -->
-          <div>{{ task.title }}</div>
-
-          <!-- Buttons -->
-          <div class="mr-2" @click="uncompleteTask(task)">
-            <IFa7SolidCheck />
-          </div>
-        </b-list-group-item>
-      </b-list-group>
+      <div v-for="task in completedTasks" :key="task.id">
+        <todo-item :done="false" :task="task" />
+      </div>
     </div>
   </div>
 </template>

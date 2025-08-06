@@ -9,6 +9,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BButton: typeof import('bootstrap-vue-next/components/BButton')['BButton']
+    BCard: typeof import('bootstrap-vue-next/components/BCard')['BCard']
+    BCardText: typeof import('bootstrap-vue-next/components/BCard')['BCardText']
     BContainer: typeof import('bootstrap-vue-next/components/BContainer')['BContainer']
     BForm: typeof import('bootstrap-vue-next/components/BForm')['BForm']
     BFormGroup: typeof import('bootstrap-vue-next/components/BFormGroup')['BFormGroup']
@@ -20,6 +22,7 @@ declare module 'vue' {
     BNavbar: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbar']
     BNavItem: typeof import('bootstrap-vue-next/components/BNav')['BNavItem']
     BSpinner: typeof import('bootstrap-vue-next/components/BSpinner')['BSpinner']
+    copy: typeof import('./src/components/Home copy.vue')['default']
     Edit: typeof import('./src/components/Edit.vue')['default']
     Habits: typeof import('./src/components/Habits.vue')['default']
     Home: typeof import('./src/components/Home.vue')['default']
@@ -33,5 +36,6 @@ declare module 'vue' {
     IFa7SolidDotCircle: typeof import('~icons/fa7-solid/dot-circle')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TodoItem: typeof import('./src/components/TodoItem.vue')['default']
   }
 }
