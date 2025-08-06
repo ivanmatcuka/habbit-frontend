@@ -4,14 +4,14 @@
     <!-- Current date -->
     <div class="d-flex align-items-center justify-content-between">
       <b-button variant="outline-primary" @click="goDayBack">
-        <b-icon icon="arrow-left" />
+        <IFa7SolidArrowLeft />
       </b-button>
       <h1 class="text-center">{{ date.format("MMM Do YYYY") }}</h1>
-      <b-button variant="outline-primary" v-if="canGoForward"  @click="goDayForward">
-        <b-icon icon="arrow-right" />
+      <b-button variant="outline-primary" v-if="canGoForward" @click="goDayForward">
+        <IFa7SolidArrowRight />
       </b-button>
       <b-button variant="outline-secondary" v-else>
-        <b-icon icon="arrow-right" />
+        <IFa7SolidArrowRight />
       </b-button>
     </div>
 
@@ -22,21 +22,18 @@
       <h2>Uncompleted tasks</h2>
 
       <b-list-group>
-        <b-list-group-item
-          v-for="task in uncompletedTasks"
-          v-bind:key="task.id"
-          class="d-flex align-items-center justify-content-between"
-        >
+        <b-list-group-item v-for="task in uncompletedTasks" v-bind:key="task.id"
+          class="d-flex align-items-center justify-content-between">
 
-            <!-- Title -->
-            <div>{{ task.title }}</div>
+          <!-- Title -->
+          <div>{{ task.title }}</div>
 
-            <!-- Buttons -->
-            <div>
-              <b-button variant="success" class="mr-2" @click="completeTask(task.id)">
-                <b-icon icon="app" />
-              </b-button>
-            </div>
+          <!-- Buttons -->
+          <div>
+            <b-button variant="success" class="mr-2" @click="completeTask(task.id)">
+              <b-icon icon="app" />
+            </b-button>
+          </div>
 
         </b-list-group-item>
       </b-list-group>
@@ -50,11 +47,8 @@
       <h2>Completed tasks</h2>
 
       <b-list-group>
-        <b-list-group-item
-            v-for="task in completedTasks"
-            v-bind:key="task.id"
-            class="d-flex align-items-center justify-content-between"
-        >
+        <b-list-group-item v-for="task in completedTasks" v-bind:key="task.id"
+          class="d-flex align-items-center justify-content-between">
 
           <!-- Title -->
           <div>{{ task.title }}</div>
@@ -72,7 +66,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // Services
 import tasksService from '../services/tasks';
 
@@ -80,7 +74,7 @@ import tasksService from '../services/tasks';
 import moment from 'moment';
 
 export default {
-  name: 'Home',
+  name: 'HomePage',
   components: {},
 
   data() {
@@ -91,13 +85,7 @@ export default {
   },
 
   methods: {
-    /**
-     * Completes the task.
-     * 
-     * @param {number} id - Task ID.
-     * @return {Promise<void>}
-     */
-    async completeTask(id) {
+    async completeTask(id: number) {
       try {
         await tasksService.completeTask(id, {
           'completed_at': this.date.format('YYYY-MM-DD HH:mm:ss'),
@@ -110,7 +98,7 @@ export default {
 
     /**
      * Uncompletes the task.
-     * 
+     *
      * @param {number} task - Task object.
      * @return {Promise<void>}
      */
@@ -132,7 +120,7 @@ export default {
 
     /**
      * Fetches all tasks.
-     * 
+     *
      * @return {Promise<any>}
      */
     async fetchTasks() {
@@ -145,7 +133,7 @@ export default {
 
     /**
      * Goes one day backward.
-     * 
+     *
      * @return {void}
      */
     goDayBack() {
@@ -154,7 +142,7 @@ export default {
 
     /**
      * Goes one day forward.
-     * 
+     *
      * @return {void}
      */
     goDayForward() {
@@ -165,7 +153,7 @@ export default {
   computed: {
     /**
      * Returns completed tasks.
-     * 
+     *
      * @return {any[]}
      */
     completedTasks() {
@@ -178,7 +166,7 @@ export default {
 
     /**
      * Returns uncompleted tasks.
-     * 
+     *
      * @return {any[]}
      */
     uncompletedTasks() {
@@ -191,7 +179,7 @@ export default {
 
     /**
      * Checks if there are days in the future.
-     * 
+     *
      * @return {boolean}
      */
     canGoForward() {

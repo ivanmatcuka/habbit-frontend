@@ -3,36 +3,25 @@
 
     <!-- Navigation -->
     <b-container class="mt-5 mb-5">
-      <b-nav pills class="mb-2">
+      <b-navbar class="mb-2">
         <b-nav-item :active="isActive('home')" class="font-weight-bold">
-          <router-link :to="{ name: 'home' }">Dashboard</router-link>
+          <router-link to="home">Dashboard</router-link>
         </b-nav-item>
         <b-nav-item :active="isActive('habits')" class="font-weight-bold">
-          <router-link :to="{ name: 'habits' }">Habits</router-link>
+          <router-link to="habits">Habits</router-link>
         </b-nav-item>
-      </b-nav>
-
+      </b-navbar>
       <router-view />
     </b-container>
   </div>
 </template>
 
-<script>
-// Bootstrap
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
-
+<script lang="ts">
 export default {
   name: 'App',
   components: {},
   methods: {
-    /**
-     * Checks if the route is active.
-     * 
-     * @param {string} name - Route name.
-     * @return {boolean}
-     */
-    isActive(name) {
+    isActive(name: string) {
       return this.$route.name === name;
     }
   }
@@ -46,9 +35,6 @@ $primary: #35A7FF
 $success: #33CA7F
 $warning: #FFE74C
 $danger: #FF5964
-
-@import '../node_modules/bootstrap/scss/bootstrap'
-@import '../node_modules/bootstrap-vue/src/index.scss'
 
 *
   font-family: 'Quicksand', sans-serif
