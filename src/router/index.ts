@@ -4,14 +4,14 @@ import HabitsPage from '../components/Habits.vue'
 import EditPage from '../components/Edit.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHistory('/'),
   routes: [
-    { path: '/', component: HomePage },
+    { path: '/', component: HomePage, name: 'home' },
     {
-      path: '/home',
-      component: HomePage,
+      path: '/habits',
+      component: HabitsPage,
+      name: 'habits',
     },
-    { path: '/habits', component: HabitsPage },
     { path: '/edit/:id', component: EditPage },
   ],
 })

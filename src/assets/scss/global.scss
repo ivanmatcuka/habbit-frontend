@@ -1,0 +1,65 @@
+$gray-default: #100c08;
+$gray-100: #e7e7e6;
+$gray-200: #cfcece;
+$gray-300: #b7b6b5;
+$gray-400: #9f9e9c;
+$gray-500: #888684;
+$gray-600: #706d6b;
+$gray-700: #585552;
+$gray-800: #403d39;
+$gray-900: #282421;
+
+$grays: (
+  'default': $gray-default,
+  '100': $gray-100,
+  '200': $gray-200,
+  '300': $gray-300,
+  '400': $gray-400,
+  '500': $gray-500,
+  '600': $gray-600,
+  '700': $gray-700,
+  '800': $gray-800,
+  '900': $gray-900,
+) !default;
+
+$spacer: 8px !default;
+$spacers: (
+  0: 0,
+  1: $spacer * 1,
+  2: $spacer * 2,
+  3: $spacer * 3,
+  4: $spacer * 4,
+  5: $spacer * 5,
+  6: $spacer * 6,
+  7: $spacer * 7,
+  8: $spacer * 8,
+) !default;
+
+$body-bg-dark: $gray-default !default;
+
+$border-radius: $spacer;
+$border-radius-sm: $spacer * 2;
+$border-radius-lg: $spacer * 3;
+$border-radius-xl: $spacer * 4;
+$border-radius-xxl: $spacer * 5;
+
+// Required
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+
+.btn-bd-primary {
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: #{$gray-900};
+  --bs-btn-border-color: #{$gray-800};
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #{$gray-800};
+  --bs-btn-hover-border-color: #{$gray-700};
+  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #{$gray-800};
+  --bs-btn-active-border-color: white;
+}
+
+#app {
+  margin: auto;
+  max-width: 960px;
+}

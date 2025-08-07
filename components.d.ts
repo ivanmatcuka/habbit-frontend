@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     BButton: typeof import('bootstrap-vue-next/components/BButton')['BButton']
     BCard: typeof import('bootstrap-vue-next/components/BCard')['BCard']
+    BCardBody: typeof import('bootstrap-vue-next/components/BCard')['BCardBody']
     BCardText: typeof import('bootstrap-vue-next/components/BCard')['BCardText']
     BContainer: typeof import('bootstrap-vue-next/components/BContainer')['BContainer']
     BForm: typeof import('bootstrap-vue-next/components/BForm')['BForm']
@@ -22,8 +23,17 @@ declare module 'vue' {
     BNavbar: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbar']
     BNavItem: typeof import('bootstrap-vue-next/components/BNav')['BNavItem']
     BSpinner: typeof import('bootstrap-vue-next/components/BSpinner')['BSpinner']
-    copy: typeof import('./src/components/Home copy.vue')['default']
+    CheckedCirclieIcon: typeof import('./src/components/CheckedCirclieIcon.vue')['default']
+    ChevronLeft: typeof import('./src/components/ChevronLeft.vue')['default']
+    ChevronRight: typeof import('./src/components/ChevronRight.vue')['default']
+    CirclieIcon: typeof import('./src/components/CirclieIcon.vue')['default']
+    copy: typeof import('./src/components/Edit copy.vue')['default']
+    DeleteDialog: typeof import('./src/components/DeleteDialog.vue')['default']
+    DropdownIcon: typeof import('./src/components/DropdownIcon.vue')['default']
     Edit: typeof import('./src/components/Edit.vue')['default']
+    EditIcon: typeof import('./src/components/EditIcon.vue')['default']
+    Habit: typeof import('./src/components/Habit.vue')['default']
+    HabitItem: typeof import('./src/components/HabitItem.vue')['default']
     Habits: typeof import('./src/components/Habits.vue')['default']
     Home: typeof import('./src/components/Home.vue')['default']
     IBi0Circle: typeof import('~icons/bi/0-circle')['default']
@@ -37,5 +47,9 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TodoItem: typeof import('./src/components/TodoItem.vue')['default']
+    TrashIcon: typeof import('./src/components/TrashIcon.vue')['default']
+  }
+  export interface GlobalDirectives {
+    vBModal: typeof import('bootstrap-vue-next/directives/BModal')['vBModal']
   }
 }

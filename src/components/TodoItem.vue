@@ -1,48 +1,39 @@
 <template>
-  <b-card class="rounded-4 py-2 px-4">
-    <b-card-text class="text-white fs-5">{{ task?.title }}</b-card-text>
+  <b-card
+    class="rounded-3 border-2"
+    body-class="py-3 px-4 d-flex justify-content-between"
+    bg-variant="dark-subtle"
+  >
+    <div class="d-flex gap-2 align-items-center">
+      <b-button class="p-0" variant="link" @click="onDo">
+        <CirclieIcon v-if="!done" />
+        <CheckedCirclieIcon v-else />
+      </b-button>
+      <b-card-text class="fs-5" :class="{ 'text-secondary': done, 'text-light': !done }">
+        {{ task?.title }}
+      </b-card-text>
+    </div>
+    <div>
+      <DropdownIcon />
+    </div>
   </b-card>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
-import tasksService, { type Task } from '../services/tasks'
-import moment from 'moment'
+import { type Task } from '@/services/tasks'
+import CirclieIcon from './CirclieIcon.vue'
+import CheckedCirclieIcon from './CheckedCirclieIcon.vue'
+import DropdownIcon from './DropdownIcon.vue'
 
 export default defineComponent({
   name: 'TodoItem',
-  components: {},
+  components: { CirclieIcon, CheckedCirclieIcon, DropdownIcon },
 
   props: {
     task: Object as PropType<Task>,
     done: Boolean,
-  },
-
-  methods: {
-    async completeTask() {
-      if (!this.task?.id) return
-
-      await tasksService.completeTask(String(this.task?.id), {
-        completed_at: moment().format('YYYY-MM-DD HH:mm:ss'),
-      })
-    },
+    onDo: Function as PropType<(payload: MouseEvent) => void>,
   },
 })
 </script>
-
-<style lang="sass" scoped>
-$smokey-black-default: #100C08
-$smokey-black-100: #E7E7E6
-$smokey-black-200: #CFCECE
-$smokey-black-300: #B7B6B5
-$smokey-black-400: #9F9E9C
-$smokey-black-500: #888684
-$smokey-black-600: #706D6B
-$smokey-black-700: #585552
-$smokey-black-800: #403D39
-$smokey-black-900: #282421
-
-.card
-  background-color: $smokey-black-900
-  border: solid 2px $smokey-black-800
-</style>

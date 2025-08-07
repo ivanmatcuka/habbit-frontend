@@ -13,7 +13,7 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     Components({
-      resolvers: [BootstrapVueNextResolver(),IconsResolve()],
+      resolvers: [BootstrapVueNextResolver(), IconsResolve()],
       dts: true,
     }),
     Icons({
@@ -23,7 +23,14 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  // css: {
+  //   preprocessorOptions: {
+  //     scss: {
+  //       additionalData: `@forward "@/assets/scss/global.scss";`,
+  //     },
+  //   },
+  // },
 })

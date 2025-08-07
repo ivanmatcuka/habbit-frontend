@@ -1,7 +1,7 @@
 import axios from 'axios'
 import api from '../utils/api'
 
-const BASE_URL = import.meta.env.VITE_BASE_URL
+const API_URL = import.meta.env.VITE_API_URL
 
 export interface Completion {
   id: number
@@ -30,31 +30,31 @@ export default {
   },
 
   async deleteTask(id: string) {
-    const response = await axios.delete(`${BASE_URL}/tasks/${id}`)
+    const response = await axios.delete(`${API_URL}/tasks/${id}`)
 
     return response.data
   },
 
   async updateTask(id: string, data: unknown) {
-    const response = await axios.patch(`${BASE_URL}/tasks/${id}`, data)
+    const response = await axios.patch(`${API_URL}/tasks/${id}`, data)
 
     return response.data
   },
 
   async completeTask(id: string, data: unknown) {
-    const response = await axios.post(`${BASE_URL}/complete/${id}`, data)
+    const response = await axios.post(`${API_URL}/complete/${id}`, data)
 
     return response.data
   },
 
   async uncompleteTask(id: string) {
-    const response = await axios.delete(`${BASE_URL}/completions/${id}`)
+    const response = await axios.delete(`${API_URL}/completions/${id}`)
 
     return response.data
   },
 
   async createTask(data: unknown) {
-    const response = await axios.post(`${BASE_URL}/tasks`, data)
+    const response = await axios.post(`${API_URL}/tasks`, data)
 
     return response.data
   },

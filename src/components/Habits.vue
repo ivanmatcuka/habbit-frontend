@@ -29,40 +29,15 @@
       </b-form>
     </b-modal>
 
-    <!-- Modal -->
-    <b-modal id="modal-delete" ok-only @ok="confirmDelete" @close="cancelDelete">
-      <p class="my-4">Confirm you actually want to delete this task</p>
-    </b-modal>
+    <div class="d-flex flex-column gap-2 mb-6">
+      <h2 class="text-white">Tasks</h2>
+      <habit-item v-for="task in tasks" :key="task.id" :task="task" :on-delete="confirmDelete" />
+    </div>
 
-    <!-- List -->
-    <b-list-group>
-      <b-list-group-item
-        v-for="task in tasks"
-        :key="task.id"
-        class="d-flex align-items-center justify-content-between"
-      >
-        <!-- Title -->
-        <div>{{ task.title }}: {{ getFrequencyString(task.frequency) }}</div>
-
-        <!-- Buttons -->
-        <div>
-          <!-- Edit -->
-          <router-link :to="`/edit/${task.id}`">
-            <b-button variant="secondary" class="mr-2">
-              <b-icon icon="pencil-square" />
-            </b-button>
-          </router-link>
-
-          <!-- Delete -->
-          <b-button variant="danger" @click="openDeleteModal(task.id)">
-            <b-icon icon="trash-fill" />
-          </b-button>
-        </div>
-      </b-list-group-item>
-    </b-list-group>
-
-    <!-- Add button -->
-    <b-button variant="success" class="mt-2 font-weight-bold" @click="openCreateModal"
+    <b-button
+      variant="outline-light"
+      class="btn-bd-primary rounded-1 px-3 py-2 lh-1 border-2"
+      @click="openCreateModal"
       >Add</b-button
     >
   </div>
@@ -71,6 +46,16 @@
 <script lang="ts">
 import tasksService, { type Task } from '@/services/tasks'
 
+const OPTIONS = [
+  { value: 1, text: 1 },
+  { value: 2, text: 2 },
+  { value: 3, text: 3 },
+  { value: 4, text: 4 },
+  { value: 5, text: 5 },
+  { value: 6, text: 6 },
+  { value: 7, text: 7 },
+]
+
 type HabitsPageState = {
   isLoading: boolean
   title: string
@@ -78,6 +63,7 @@ type HabitsPageState = {
   tasks: Task[]
   selectedTaskId: number | null
   modal: boolean
+  options: typeof OPTIONS
 }
 
 export default {
@@ -92,21 +78,8 @@ export default {
       tasks: [],
       selectedTaskId: null,
       modal: false,
+      options: OPTIONS,
     }
-  },
-
-  computed: {
-    options() {
-      return [
-        { value: 1, text: 1 },
-        { value: 2, text: 2 },
-        { value: 3, text: 3 },
-        { value: 4, text: 4 },
-        { value: 5, text: 5 },
-        { value: 6, text: 6 },
-        { value: 7, text: 7 },
-      ]
-    },
   },
 
   async mounted() {
@@ -114,31 +87,20 @@ export default {
   },
 
   methods: {
-    openDeleteModal(id: number) {
-      this.selectedTaskId = id
-    },
-
     openCreateModal() {
       this.modal = !this.modal
     },
 
-    cancelDelete() {
-      this.selectedTaskId = null
-    },
-
-    async confirmDelete() {
-      if (!this.selectedTaskId) {
-        return
-      }
+    async confirmDelete(selectedTaskId?: number) {
+      if (!selectedTaskId) return
 
       try {
-        await tasksService.deleteTask(this.selectedTaskId)
+        await tasksService.deleteTask(String(selectedTaskId))
       } catch (ex) {
         console.log(ex)
       }
 
-      this.tasks = this.tasks.filter((task) => task.id !== this.selectedTaskId)
-      this.selectedTaskId = null
+      this.tasks = this.tasks.filter((task) => task.id !== selectedTaskId)
     },
 
     getFrequencyString(n: number) {

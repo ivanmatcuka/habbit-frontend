@@ -21,34 +21,32 @@
 <script lang="ts">
 import tasksService, { type Task } from '../services/tasks'
 
+export const OPTIONS = [
+  { value: 1, text: 1 },
+  { value: 2, text: 2 },
+  { value: 3, text: 3 },
+  { value: 4, text: 4 },
+  { value: 5, text: 5 },
+  { value: 6, text: 6 },
+  { value: 7, text: 7 },
+]
+
 type EditComponentState = {
   task: Task | null
   isLoading: boolean
+  options: typeof OPTIONS
 }
 
 export default {
-  name: 'EditComponent',
+  name: 'EditPage',
   components: {},
 
   data(): EditComponentState {
     return {
       task: null,
       isLoading: false,
+      options: OPTIONS,
     }
-  },
-
-  computed: {
-    options() {
-      return [
-        { value: 1, text: 1 },
-        { value: 2, text: 2 },
-        { value: 3, text: 3 },
-        { value: 4, text: 4 },
-        { value: 5, text: 5 },
-        { value: 6, text: 6 },
-        { value: 7, text: 7 },
-      ]
-    },
   },
 
   async mounted() {
@@ -82,5 +80,3 @@ export default {
   },
 }
 </script>
-
-<style></style>

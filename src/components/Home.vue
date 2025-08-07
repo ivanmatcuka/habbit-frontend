@@ -1,36 +1,38 @@
 <template>
-  <div>
+  <div class="d-flex flex-column gap-6">
     <!-- Current date -->
     <div class="d-flex align-items-center justify-content-between">
-      <b-button variant="outline-primary" @click="goDayBack">
-        <IFa7SolidArrowLeft />
+      <b-button variant="outline-light" class="border-0" @click="goDayBack">
+        <chevron-left />
       </b-button>
-      <h1 class="text-center">{{ date.format('MMM Do YYYY') }}</h1>
-      <b-button v-if="canGoForward" variant="outline-primary" @click="goDayForward">
-        <IFa7SolidArrowRight />
+      <h1 class="text-center text-white">{{ date.format('MMM Do YYYY') }}</h1>
+      <b-button v-if="canGoForward" class="border-0" variant="outline-light" @click="goDayForward">
+        <chevron-right />
       </b-button>
-      <b-button v-else variant="outline-secondary">
-        <IFa7SolidArrowRight />
+      <b-button v-else class="border-0" variant="outline-dark">
+        <chevron-right />
       </b-button>
     </div>
 
-    <!-- List of tasks -->
-    <div class="mt-4">
-      <!-- Heading -->
-      <h2>Uncompleted tasks</h2>
+    <div class="mt-4 d-flex flex-column gap-2">
+      <h2 class="text-white">To-Do</h2>
 
       <div class="d-flex flex-column gap-2">
-        <todo-item v-for="task in uncompletedTasks" :key="task.id" :done="true" :task="task" />
+        <todo-item
+          v-for="task in uncompletedTasks"
+          :key="task.id"
+          :done="false"
+          :task="task"
+          :on-do="() => completeTask(task.id)"
+        />
       </div>
     </div>
 
-    <!-- List of complete tasks -->
-    <div v-if="completedTasks.length" class="mt-4">
-      <!-- Heading -->
-      <h2>Completed tasks</h2>
+    <div v-if="completedTasks.length" class="mt-4 d-flex flex-column gap-2">
+      <h2 class="text-white">Done</h2>
 
       <div v-for="task in completedTasks" :key="task.id">
-        <todo-item :done="false" :task="task" />
+        <todo-item :done="true" :task="task" :on-do="() => uncompleteTask(task)" />
       </div>
     </div>
   </div>
