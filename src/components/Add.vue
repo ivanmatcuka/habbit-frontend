@@ -1,7 +1,7 @@
 <template>
-  <div v-if="task">
+  <div>
     <b-form class="d-flex flex-column mt-5 gap-4" @submit="submit">
-      <h1 class="text-white">Edit Task "{{ task.title }}"</h1>
+      <h1 class="text-white">Add Task</h1>
 
       <!-- Title field -->
       <b-form-group
@@ -11,7 +11,7 @@
         label-class="mb-1 p-0"
       >
         <b-form-input
-          v-model="task.title"
+          v-model="title"
           class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
           placeholder="Enter title"
           required
@@ -26,7 +26,7 @@
         description="How many times per week do you want to do this?"
       >
         <b-form-select
-          v-model="task.frequency"
+          v-model="frequency"
           :options="options"
           required
           class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
@@ -41,7 +41,7 @@
           type="submit"
           variant="outline-light"
           class="btn-bd-primary rounded-1 px-3 py-2 lh-1 border-2"
-          >Save</b-button
+          >Add</b-button
         >
         <b-spinner v-else key="primary" variant="primary" type="grow" />
       </div>
@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import tasksService, { type Task } from '../services/tasks'
+import tasksService from '../services/tasks'
 
 export const OPTIONS = [
   { value: 1, text: 1 },
@@ -62,43 +62,39 @@ export const OPTIONS = [
   { value: 7, text: 7 },
 ]
 
-type EditComponentState = {
-  task: Task | null
+type AddComponentState = {
   isLoading: boolean
   options: typeof OPTIONS
+  title: string
+  frequency: number
 }
 
 export default {
-  name: 'EditPage',
+  name: 'AddPage',
   components: {},
 
-  data(): EditComponentState {
+  data(): AddComponentState {
     return {
-      task: null,
       isLoading: false,
       options: OPTIONS,
+      title: '',
+      frequency: 1,
     }
-  },
-
-  async mounted() {
-    this.task = await tasksService.getTask(this.$route.params.id as string)
   },
 
   methods: {
     async submit(event: Event) {
-      if (!this.task) return
-
       event.preventDefault()
 
       const data = {
-        title: this.task.title,
-        frequency: this.task.frequency,
+        title: this.title,
+        frequency: this.frequency,
       }
 
       this.isLoading = true
 
       try {
-        await tasksService.updateTask(String(this.task.id), data)
+        await tasksService.createTask(data)
         await this.$router.push({
           name: 'habits',
         })

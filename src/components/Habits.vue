@@ -1,34 +1,5 @@
 <template>
   <div>
-    <!-- Modal -->
-    <b-modal id="modal-create" v-model="modal" hide-footer>
-      <b-form @submit="submit">
-        <!-- Title field -->
-        <b-form-group label="Title" description="What exactly do you want to do repeatedly?">
-          <b-form-input v-model="title" placeholder="Enter title" required />
-        </b-form-group>
-
-        <!-- Frequency -->
-        <b-form-group
-          label="Frequency"
-          description="How many times per week do you want to do this?"
-        >
-          <b-form-select v-model="frequency" :options="options" required />
-        </b-form-group>
-
-        <!-- Button -->
-        <b-button
-          v-if="!isLoading"
-          type="submit"
-          variant="outline-primary"
-          class="font-weight-bold"
-        >
-          Save
-        </b-button>
-        <b-spinner v-else key="primary" variant="primary" type="grow" />
-      </b-form>
-    </b-modal>
-
     <div class="d-flex flex-column gap-2 mb-6">
       <h2 class="text-white">Tasks</h2>
       <habit-item v-for="task in tasks" :key="task.id" :task="task" :on-delete="confirmDelete" />
@@ -37,7 +8,7 @@
     <b-button
       variant="outline-light"
       class="btn-bd-primary rounded-1 px-3 py-2 lh-1 border-2"
-      @click="openCreateModal"
+      to="/add"
       >Add</b-button
     >
   </div>
@@ -87,10 +58,6 @@ export default {
   },
 
   methods: {
-    openCreateModal() {
-      this.modal = !this.modal
-    },
-
     async confirmDelete(selectedTaskId?: number) {
       if (!selectedTaskId) return
 
@@ -111,22 +78,6 @@ export default {
       }
 
       return `${n} ${times} per week`
-    },
-
-    async submit(event: Event) {
-      event.preventDefault()
-
-      const data = {
-        title: this.title,
-        frequency: this.frequency,
-      }
-
-      try {
-        const result = await tasksService.createTask(data)
-        this.tasks = [result, ...this.tasks]
-      } catch (ex) {
-        console.error(ex)
-      }
     },
   },
 }

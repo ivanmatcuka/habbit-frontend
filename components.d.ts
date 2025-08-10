@@ -8,9 +8,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Add: typeof import('./src/components/Add.vue')['default']
     BButton: typeof import('bootstrap-vue-next/components/BButton')['BButton']
     BCard: typeof import('bootstrap-vue-next/components/BCard')['BCard']
     BCardBody: typeof import('bootstrap-vue-next/components/BCard')['BCardBody']
+    BCardHeader: typeof import('bootstrap-vue-next/components/BCard')['BCardHeader']
     BCardText: typeof import('bootstrap-vue-next/components/BCard')['BCardText']
     BContainer: typeof import('bootstrap-vue-next/components/BContainer')['BContainer']
     BForm: typeof import('bootstrap-vue-next/components/BForm')['BForm']
@@ -23,6 +25,7 @@ declare module 'vue' {
     BNavbar: typeof import('bootstrap-vue-next/components/BNavbar')['BNavbar']
     BNavItem: typeof import('bootstrap-vue-next/components/BNav')['BNavItem']
     BSpinner: typeof import('bootstrap-vue-next/components/BSpinner')['BSpinner']
+    BTooltip: typeof import('bootstrap-vue-next/components/BTooltip')['BTooltip']
     CheckedCirclieIcon: typeof import('./src/components/CheckedCirclieIcon.vue')['default']
     ChevronLeft: typeof import('./src/components/ChevronLeft.vue')['default']
     ChevronRight: typeof import('./src/components/ChevronRight.vue')['default']
