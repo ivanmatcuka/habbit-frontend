@@ -49,6 +49,7 @@ declare module 'vue' {
     IFa7SolidDotCircle: typeof import('~icons/fa7-solid/dot-circle')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SignIn: typeof import('./src/components/SignIn.vue')['default']
     TodoItem: typeof import('./src/components/TodoItem.vue')['default']
     TrashIcon: typeof import('./src/components/TrashIcon.vue')['default']
   }

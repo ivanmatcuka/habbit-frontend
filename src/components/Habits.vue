@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <auth-layout>
     <div class="d-flex flex-column gap-2 mb-6">
       <h2 class="text-white">Tasks</h2>
       <habit-item v-for="task in tasks" :key="task.id" :task="task" :on-delete="confirmDelete" />
@@ -11,10 +11,11 @@
       to="/add"
       >Add</b-button
     >
-  </div>
+  </auth-layout>
 </template>
 
 <script lang="ts">
+import AuthLayout from '@/AuthLayout.vue'
 import tasksService, { type Task } from '@/services/tasks'
 
 const OPTIONS = [
@@ -39,7 +40,7 @@ type HabitsPageState = {
 
 export default {
   name: 'HabitsPage',
-  components: {},
+  components: { AuthLayout },
 
   data(): HabitsPageState {
     return {
@@ -54,7 +55,13 @@ export default {
   },
 
   async mounted() {
-    this.tasks = await tasksService.getTasks()
+    const { data, error } = await tasksService.getTasks()
+
+    if (error) {
+      console.error('Failed to fetch tasks:', error)
+    }
+
+    this.tasks = data ?? []
   },
 
   methods: {

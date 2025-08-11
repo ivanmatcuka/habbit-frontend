@@ -1,5 +1,5 @@
 <template>
-  <div v-if="task">
+  <auth-layout v-if="task">
     <b-form class="d-flex flex-column mt-5 gap-4" @submit="submit">
       <h1 class="text-white">Edit Task "{{ task.title }}"</h1>
 
@@ -46,10 +46,11 @@
         <b-spinner v-else key="primary" variant="primary" type="grow" />
       </div>
     </b-form>
-  </div>
+  </auth-layout>
 </template>
 
 <script lang="ts">
+import AuthLayout from '@/AuthLayout.vue'
 import tasksService, { type Task } from '../services/tasks'
 
 export const OPTIONS = [
@@ -70,7 +71,7 @@ type EditComponentState = {
 
 export default {
   name: 'EditPage',
-  components: {},
+  components: { AuthLayout },
 
   data(): EditComponentState {
     return {
@@ -81,7 +82,13 @@ export default {
   },
 
   async mounted() {
-    this.task = await tasksService.getTask(this.$route.params.id as string)
+    const { data, error } = await tasksService.getTask(this.$route.params.id as string)
+
+    if (error) {
+      console.error('Failed to fetch tasks:', error)
+    }
+
+    this.task = data ?? null
   },
 
   methods: {
@@ -90,23 +97,23 @@ export default {
 
       event.preventDefault()
 
-      const data = {
+      const fields = {
         title: this.task.title,
         frequency: this.task.frequency,
       }
 
       this.isLoading = true
 
-      try {
-        await tasksService.updateTask(String(this.task.id), data)
-        await this.$router.push({
-          name: 'habits',
-        })
-      } catch (ex) {
-        console.log(ex)
-      } finally {
-        this.isLoading = false
+      const { error } = await tasksService.updateTask(String(this.task.id), fields)
+
+      if (error) {
+        console.error('Failed to fetch tasks:', error)
+        return
       }
+
+      await this.$router.push({
+        name: 'habits',
+      })
     },
   },
 }

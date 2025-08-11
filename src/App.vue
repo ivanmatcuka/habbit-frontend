@@ -1,31 +1,22 @@
 <template>
-  <div id="app">
-    <b-container class="my-8">
-      <div class="d-flex gap-2 mb-8">
-        <router-link to="/">
-          <b-button
-            class="rounded-1 px-3 py-2 lh-1 border-2 btn-bd-primary"
-            :class="{ active: isActive('home') }"
-            >Dashboard</b-button
-          >
-        </router-link>
-        <router-link to="/habits">
-          <b-button
-            class="rounded-1 px-3 py-2 lh-1 border-2 btn-bd-primary"
-            :active="isActive('habits')"
-            >Habits</b-button
-          >
-        </router-link>
-      </div>
-      <router-view />
-    </b-container>
-  </div>
+  <router-view />
 </template>
 
 <script lang="ts">
+import { mapStores } from 'pinia'
+import { useUserStore } from './stores/user'
+
 export default {
   name: 'App',
   components: {},
+  computed: {
+    ...mapStores(useUserStore),
+  },
+
+  mounted() {
+    console.log('App mounted', this.userStore.isLoggedIn)
+  },
+
   methods: {
     isActive(name: string) {
       return this.$route.name === name

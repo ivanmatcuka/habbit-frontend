@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <auth-layout>
     <b-form class="d-flex flex-column mt-5 gap-4" @submit="submit">
       <h1 class="text-white">Add Task</h1>
 
@@ -46,10 +46,11 @@
         <b-spinner v-else key="primary" variant="primary" type="grow" />
       </div>
     </b-form>
-  </div>
+  </auth-layout>
 </template>
 
 <script lang="ts">
+import AuthLayout from '@/AuthLayout.vue'
 import tasksService from '../services/tasks'
 
 export const OPTIONS = [
@@ -71,7 +72,7 @@ type AddComponentState = {
 
 export default {
   name: 'AddPage',
-  components: {},
+  components: { AuthLayout },
 
   data(): AddComponentState {
     return {
