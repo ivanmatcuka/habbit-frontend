@@ -1,0 +1,31 @@
+<template>
+  <unauth-layout class="d-flex flex-column mt-5 gap-4">
+    <h1 class="text-white text-center">Signin Out...</h1>
+  </unauth-layout>
+</template>
+
+<script lang="ts">
+import UnauthLayout from '@/UnauthLayout.vue'
+import { useUserStore } from '@/stores/user'
+import { mapStores } from 'pinia'
+
+export default {
+  name: 'SignOutPage',
+  components: { UnauthLayout },
+
+  computed: {
+    ...mapStores(useUserStore),
+  },
+
+  mounted() {
+    this.signOut()
+  },
+
+  methods: {
+    async signOut() {
+      this.userStore.clearUser()
+      this.$router.push({ name: 'signin' })
+    },
+  },
+}
+</script>

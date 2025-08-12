@@ -46,10 +46,23 @@ $border-radius-xxl: $spacer * 5;
 // Required
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
-.btn-bd-primary {
+.btn,
+.btn-link,
+.dropdown-item {
+  &:focus-visible {
+    outline: solid 3px rgba($color: #adebb3, $alpha: 0.5);
+    outline-offset: 3px;
+    box-shadow: none;
+  }
+}
+
+.btn-dark {
+  --bs-btn-padding-y: #{$spacer * 2};
+  --bs-btn-padding-x: #{$spacer * 3};
   --bs-btn-color: var(--bs-white);
   --bs-btn-bg: #{$gray-900};
   --bs-btn-border-color: #{$gray-800};
+  --bs-btn-border-width: 2px;
   --bs-btn-hover-color: var(--bs-white);
   --bs-btn-hover-bg: #{$gray-800};
   --bs-btn-hover-border-color: #{$gray-700};
@@ -57,4 +70,46 @@ $border-radius-xxl: $spacer * 5;
   --bs-btn-active-color: var(--bs-btn-hover-color);
   --bs-btn-active-bg: #{$gray-800};
   --bs-btn-active-border-color: white;
+  --bs-btn-border-radius: #{$border-radius-sm};
+  --bs-btn-line-height: 1;
+}
+
+.btn-outline-light {
+  --bs-btn-padding-y: #{$spacer};
+  --bs-btn-padding-x: #{$spacer * 2};
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: #{$gray-default};
+  --bs-btn-border-color: #{$gray-default};
+  --bs-btn-border-width: 2px;
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #{$gray-900};
+  --bs-btn-hover-border-color: #{$gray-900};
+  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #{$gray-900};
+  --bs-btn-active-border-color: white;
+  --bs-btn-border-radius: #{$border-radius-sm};
+}
+
+.btn-danger {
+  --bs-btn-padding-y: #{$spacer};
+  --bs-btn-padding-x: #{$spacer * 2};
+  --bs-btn-line-height: 1;
+}
+
+.btn-link {
+  --bs-btn-padding-y: 2px;
+  --bs-btn-padding-x: 2px;
+}
+
+.dropdown-menu {
+  --bs-dropdown-bg: #{$gray-900};
+  --bs-dropdown-border-color: #{$gray-800};
+  --bs-dropdown-link-color: white;
+  --bs-dropdown-link-hover-color: white;
+  --bs-dropdown-link-bg: #{$gray-800};
+  --bs-dropdown-border-width: 2px;
+  --bs-dropdown-item-padding-x: #{$spacer * 2};
+  --bs-dropdown-item-padding-y: #{$spacer};
+  --bs-dropdown-border-radius: #{$border-radius-sm};
 }

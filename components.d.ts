@@ -15,6 +15,8 @@ declare module 'vue' {
     BCardHeader: typeof import('bootstrap-vue-next/components/BCard')['BCardHeader']
     BCardText: typeof import('bootstrap-vue-next/components/BCard')['BCardText']
     BContainer: typeof import('bootstrap-vue-next/components/BContainer')['BContainer']
+    BDropdown: typeof import('bootstrap-vue-next/components/BDropdown')['BDropdown']
+    BDropdownItem: typeof import('bootstrap-vue-next/components/BDropdown')['BDropdownItem']
     BForm: typeof import('bootstrap-vue-next/components/BForm')['BForm']
     BFormGroup: typeof import('bootstrap-vue-next/components/BFormGroup')['BFormGroup']
     BFormInput: typeof import('bootstrap-vue-next/components/BFormInput')['BFormInput']
@@ -30,7 +32,7 @@ declare module 'vue' {
     ChevronLeft: typeof import('./src/components/ChevronLeft.vue')['default']
     ChevronRight: typeof import('./src/components/ChevronRight.vue')['default']
     CirclieIcon: typeof import('./src/components/CirclieIcon.vue')['default']
-    copy: typeof import('./src/components/Edit copy.vue')['default']
+    copy: typeof import('./src/components/SignIn copy.vue')['default']
     DeleteDialog: typeof import('./src/components/DeleteDialog.vue')['default']
     DropdownIcon: typeof import('./src/components/DropdownIcon.vue')['default']
     Edit: typeof import('./src/components/Edit.vue')['default']
@@ -50,8 +52,10 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SignIn: typeof import('./src/components/SignIn.vue')['default']
+    SignOut: typeof import('./src/components/SignOut.vue')['default']
     TodoItem: typeof import('./src/components/TodoItem.vue')['default']
     TrashIcon: typeof import('./src/components/TrashIcon.vue')['default']
+    UserIcon: typeof import('./src/components/UserIcon.vue')['default']
   }
   export interface GlobalDirectives {
     vBModal: typeof import('bootstrap-vue-next/directives/BModal')['vBModal']

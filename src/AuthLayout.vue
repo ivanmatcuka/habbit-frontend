@@ -1,21 +1,15 @@
 <template>
   <div id="app">
-    <b-container class="my-8">
-      <div class="d-flex gap-2 mb-8">
-        <router-link to="/">
-          <b-button
-            class="rounded-1 px-3 py-2 lh-1 border-2 btn-bd-primary"
-            :class="{ active: isActive('home') }"
-            >Dashboard</b-button
-          >
-        </router-link>
-        <router-link to="/habits">
-          <b-button
-            class="rounded-1 px-3 py-2 lh-1 border-2 btn-bd-primary"
-            :active="isActive('habits')"
-            >Habits</b-button
-          >
-        </router-link>
+    <b-container class="my-8 text-white">
+      <div class="d-flex gap-2 justify-content-between mb-8">
+        <div class="d-flex gap-2">
+          <b-button to="/" variant="dark" :class="{ active: isActive('home') }">Dashboard</b-button>
+          <b-button to="/habits" variant="dark" :active="isActive('habits')">Habits</b-button>
+        </div>
+        <b-dropdown variant="outline-light">
+          <template #button-content><user-icon /></template>
+          <b-dropdown-item to="/signout">Sign Out</b-dropdown-item>
+        </b-dropdown>
       </div>
       <slot />
     </b-container>
@@ -37,7 +31,6 @@ export default {
 <style scoped>
 #app {
   margin: auto;
-  height: 100vh;
   max-width: 768px;
 }
 </style>

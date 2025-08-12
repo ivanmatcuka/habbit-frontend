@@ -5,6 +5,7 @@ import EditPage from '../components/Edit.vue'
 import AddPage from '../components/Add.vue'
 import { userStore } from '@/main'
 import SignInPage from '@/components/SignIn.vue'
+import SignOut from '@/components/SignOut.vue'
 
 const router = createRouter({
   history: createWebHistory('/'),
@@ -23,6 +24,7 @@ const router = createRouter({
     { path: '/add', component: AddPage },
     { path: '/signin', component: SignInPage, name: 'signin' },
     { path: '/signup', component: SignInPage, name: 'signup' },
+    { path: '/signout', component: SignOut, name: 'signout' },
   ],
 })
 

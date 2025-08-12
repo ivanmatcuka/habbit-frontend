@@ -5,12 +5,7 @@
       <habit-item v-for="task in tasks" :key="task.id" :task="task" :on-delete="confirmDelete" />
     </div>
 
-    <b-button
-      variant="outline-light"
-      class="btn-bd-primary rounded-1 px-3 py-2 lh-1 border-2"
-      to="/add"
-      >Add</b-button
-    >
+    <b-button variant="dark" to="/add">Add</b-button>
   </auth-layout>
 </template>
 

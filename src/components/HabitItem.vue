@@ -13,7 +13,7 @@
       </b-card-text>
     </div>
     <div class="d-flex gap-2 flex-column align-items-center">
-      <b-button class="p-0" variant="link" :to="`/edit/${task?.id}`">
+      <b-button variant="link" :to="`/edit/${task?.id}`">
         <edit-icon />
       </b-button>
 
@@ -25,7 +25,7 @@
         body-class="rounded-3 py-2 px-3"
       >
         <template #target>
-          <b-button class="p-0" variant="link" @click="modal = true">
+          <b-button variant="link" @click="modal = true">
             <trash-icon />
           </b-button>
         </template>
@@ -33,14 +33,7 @@
         <div class="d-flex flex-column gap-1">
           <span>Are you sure you want to delete this task?</span>
           <br />
-          <b-button
-            variant="danger"
-            class="rounded-pill p-1 lh-1 border-2"
-            size="sm"
-            @click="onDelete?.(task?.id)"
-          >
-            Yes
-          </b-button>
+          <b-button variant="danger" size="sm" @click="onDelete?.(task?.id)">Yes</b-button>
         </div>
       </b-tooltip>
     </div>

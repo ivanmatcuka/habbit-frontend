@@ -36,13 +36,7 @@
       <!-- Button -->
 
       <div>
-        <b-button
-          v-if="!isLoading"
-          type="submit"
-          variant="outline-light"
-          class="btn-bd-primary rounded-1 px-3 py-2 lh-1 border-2"
-          >Add</b-button
-        >
+        <b-button v-if="!isLoading" type="submit" variant="dark">Add</b-button>
         <b-spinner v-else key="primary" variant="primary" type="grow" />
       </div>
     </b-form>
