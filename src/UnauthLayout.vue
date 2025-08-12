@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="w-100 p-2 d-flex flex-column justify-content-center align-items-stretch">
+  <main id="app" class="w-100 p-2 d-flex flex-column justify-content-center align-items-stretch">
     <slot />
-  </div>
+  </main>
 </template>
 
 <script lang="ts">

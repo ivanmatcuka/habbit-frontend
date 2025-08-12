@@ -2,7 +2,7 @@
   <auth-layout>
     <div class="d-flex flex-column gap-6">
       <!-- Current date -->
-      <div class="d-flex align-items-center justify-content-between">
+      <nav class="d-flex align-items-center justify-content-between">
         <b-button variant="outline-light" @click="goDayBack">
           <chevron-left />
         </b-button>
@@ -10,7 +10,7 @@
         <b-button variant="outline-light" :disabled="!canGoForward" @click="goDayForward">
           <chevron-right />
         </b-button>
-      </div>
+      </nav>
 
       <div class="mt-4 d-flex flex-column gap-2">
         <h2 class="text-white">To-Do</h2>
@@ -45,6 +45,7 @@ import AuthLayout from '@/AuthLayout.vue'
 
 type HomePageState = {
   tasks: Task[]
+  isLoading: boolean
   date: ReturnType<typeof moment>
 }
 
@@ -55,6 +56,7 @@ export default defineComponent({
   data(): HomePageState {
     return {
       tasks: [],
+      isLoading: false,
       date: moment(),
     }
   },
@@ -106,6 +108,8 @@ export default defineComponent({
     },
 
     async fetchTasks() {
+      this.isLoading = true
+
       const { data, error } = await tasksService.getTasks()
 
       if (error) {
@@ -113,6 +117,7 @@ export default defineComponent({
       }
 
       this.tasks = data ?? []
+      this.isLoading = false
     },
 
     goDayBack() {

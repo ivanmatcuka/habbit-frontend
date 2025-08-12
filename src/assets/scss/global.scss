@@ -66,6 +66,7 @@ $border-radius-xxl: $spacer * 5;
 .form-select {
   &:focus {
     border-color: var(--bs-border-color);
+    box-shadow: none;
   }
 }
 
