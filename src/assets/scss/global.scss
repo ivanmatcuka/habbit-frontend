@@ -48,11 +48,24 @@ $border-radius-xxl: $spacer * 5;
 
 .btn,
 .btn-link,
+.form-control,
+.form-select,
 .dropdown-item {
+  --bs-focus-ring-width: 2px;
+  --bs-focus-ring-opacity: 1;
+  --bs-focus-ring-color: $success;
+
   &:focus-visible {
-    outline: solid 3px rgba($color: #adebb3, $alpha: 0.5);
-    outline-offset: 3px;
+    outline: solid 2px $primary;
+    outline-offset: 2px;
     box-shadow: none;
+  }
+}
+
+.form-control,
+.form-select {
+  &:focus {
+    border-color: var(--bs-border-color);
   }
 }
 
@@ -89,17 +102,13 @@ $border-radius-xxl: $spacer * 5;
   --bs-btn-active-bg: #{$gray-900};
   --bs-btn-active-border-color: white;
   --bs-btn-border-radius: #{$border-radius-sm};
+  --bs-btn-disabled-border-color: transparent;
 }
 
 .btn-danger {
   --bs-btn-padding-y: #{$spacer};
   --bs-btn-padding-x: #{$spacer * 2};
   --bs-btn-line-height: 1;
-}
-
-.btn-link {
-  --bs-btn-padding-y: 2px;
-  --bs-btn-padding-x: 2px;
 }
 
 .dropdown-menu {

@@ -61,14 +61,6 @@ export default {
 
   methods: {
     async confirmDelete(selectedTaskId?: number) {
-      if (!selectedTaskId) return
-
-      try {
-        await tasksService.deleteTask(String(selectedTaskId))
-      } catch (ex) {
-        console.log(ex)
-      }
-
       this.tasks = this.tasks.filter((task) => task.id !== selectedTaskId)
     },
 

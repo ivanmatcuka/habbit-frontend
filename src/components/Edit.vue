@@ -36,8 +36,7 @@
       <!-- Button -->
 
       <div>
-        <b-button v-if="!isLoading" type="submit" variant="dark">Save</b-button>
-        <b-spinner v-else key="primary" variant="primary" type="grow" />
+        <b-button :loading="isLoading" type="submit" variant="dark" loading-fill>Save</b-button>
       </div>
     </b-form>
   </auth-layout>

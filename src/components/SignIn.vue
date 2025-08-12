@@ -34,10 +34,8 @@
         />
       </b-form-group>
 
-      <!-- Button -->
       <div>
-        <b-button v-if="!isLoading" type="submit" variant="dark">Sign In</b-button>
-        <b-spinner v-else key="primary" variant="primary" type="grow" />
+        <b-button :loading="isLoading" type="submit" variant="dark" loading-fill>Sign In</b-button>
       </div>
     </b-form>
   </unauth-layout>

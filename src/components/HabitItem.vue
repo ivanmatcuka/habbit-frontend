@@ -12,8 +12,8 @@
         {{ getFrequencyString(task.frequency) }}
       </b-card-text>
     </div>
-    <div class="d-flex gap-2 flex-column align-items-center">
-      <b-button variant="link" :to="`/edit/${task?.id}`">
+    <div class="d-flex gap-1 flex-column align-items-center">
+      <b-button class="p-1" variant="link" :to="`/edit/${task?.id}`">
         <edit-icon />
       </b-button>
 
@@ -25,7 +25,7 @@
         body-class="rounded-3 py-2 px-3"
       >
         <template #target>
-          <b-button variant="link" @click="modal = true">
+          <b-button class="p-1" variant="link" @click="modal = true">
             <trash-icon />
           </b-button>
         </template>
@@ -33,7 +33,14 @@
         <div class="d-flex flex-column gap-1">
           <span>Are you sure you want to delete this task?</span>
           <br />
-          <b-button variant="danger" size="sm" @click="onDelete?.(task?.id)">Yes</b-button>
+          <b-button
+            variant="danger"
+            :loading="isDeleting"
+            size="sm"
+            loading-fill
+            @click="confirmDelete"
+            >Yes</b-button
+          >
         </div>
       </b-tooltip>
     </div>
@@ -42,9 +49,10 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
-import { type Task } from '@/services/tasks'
+import tasksService, { type Task } from '@/services/tasks'
 import EditIcon from './EditIcon.vue'
 import TrashIcon from './TrashIcon.vue'
+
 export default defineComponent({
   name: 'HabitItem',
   components: { EditIcon, TrashIcon },
@@ -57,10 +65,25 @@ export default defineComponent({
   data() {
     return {
       modal: false,
+      isDeleting: false,
     }
   },
 
   methods: {
+    async confirmDelete() {
+      if (!this.task) return
+
+      this.isDeleting = true
+
+      const { error } = await tasksService.deleteTask(String(this.task.id))
+
+      if (!error) {
+        this.onDelete?.(this.task.id)
+      }
+
+      this.isDeleting = false
+    },
+
     getFrequencyString(n: number) {
       let times = 'time'
       if (n !== 1) times = times + 's'

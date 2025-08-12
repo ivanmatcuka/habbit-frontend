@@ -3,19 +3,11 @@
     <div class="d-flex flex-column gap-6">
       <!-- Current date -->
       <div class="d-flex align-items-center justify-content-between">
-        <b-button variant="outline-light" class="border-0" @click="goDayBack">
+        <b-button variant="outline-light" @click="goDayBack">
           <chevron-left />
         </b-button>
         <h1 class="text-center text-white">{{ date.format('MMM Do YYYY') }}</h1>
-        <b-button
-          v-if="canGoForward"
-          class="border-0"
-          variant="outline-light"
-          @click="goDayForward"
-        >
-          <chevron-right />
-        </b-button>
-        <b-button v-else class="border-0" variant="outline-dark">
+        <b-button variant="outline-light" :disabled="!canGoForward" @click="goDayForward">
           <chevron-right />
         </b-button>
       </div>
@@ -93,14 +85,12 @@ export default defineComponent({
 
   methods: {
     async completeTask(id: number) {
-      try {
-        await tasksService.completeTask(String(id), {
-          completed_at: this.date.format('YYYY-MM-DD HH:mm:ss'),
-        })
+      const { error } = await tasksService.completeTask(String(id), {
+        completed_at: this.date.format('YYYY-MM-DD HH:mm:ss'),
+      })
 
+      if (!error) {
         this.fetchTasks()
-      } catch (ex) {
-        console.error(ex)
       }
     },
 

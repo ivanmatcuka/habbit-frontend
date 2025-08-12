@@ -33,11 +33,8 @@
         />
       </b-form-group>
 
-      <!-- Button -->
-
       <div>
-        <b-button v-if="!isLoading" type="submit" variant="dark">Add</b-button>
-        <b-spinner v-else key="primary" variant="primary" type="grow" />
+        <b-button type="submit" variant="dark" :loading="isLoading" loading-fill>Add</b-button>
       </div>
     </b-form>
   </auth-layout>
@@ -88,16 +85,15 @@ export default {
 
       this.isLoading = true
 
-      try {
-        await tasksService.createTask(data)
+      const { error } = await tasksService.createTask(data)
+
+      if (!error) {
         await this.$router.push({
           name: 'habits',
         })
-      } catch (ex) {
-        console.log(ex)
-      } finally {
-        this.isLoading = false
       }
+
+      this.isLoading = false
     },
   },
 }

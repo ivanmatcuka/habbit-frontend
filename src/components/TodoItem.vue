@@ -5,16 +5,13 @@
     bg-variant="dark-subtle"
   >
     <div class="d-flex gap-2 align-items-center">
-      <b-button class="p-0" variant="link" @click="onDo">
+      <b-button class="p-0" variant="link" size="sm" @click="onDo">
         <CirclieIcon v-if="!done" />
         <CheckedCirclieIcon v-else />
       </b-button>
       <b-card-text class="fs-5" :class="{ 'text-secondary': done, 'text-light': !done }">
         {{ task?.title }}
       </b-card-text>
-    </div>
-    <div>
-      <DropdownIcon />
     </div>
   </b-card>
 </template>
@@ -24,11 +21,10 @@ import { defineComponent, type PropType } from 'vue'
 import { type Task } from '@/services/tasks'
 import CirclieIcon from './CirclieIcon.vue'
 import CheckedCirclieIcon from './CheckedCirclieIcon.vue'
-import DropdownIcon from './DropdownIcon.vue'
 
 export default defineComponent({
   name: 'TodoItem',
-  components: { CirclieIcon, CheckedCirclieIcon, DropdownIcon },
+  components: { CirclieIcon, CheckedCirclieIcon },
 
   props: {
     task: Object as PropType<Task>,
