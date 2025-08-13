@@ -5,9 +5,10 @@
 </template>
 
 <script lang="ts">
-import UnauthLayout from '@/UnauthLayout.vue'
-import { useUserStore } from '@/stores/user'
 import { mapStores } from 'pinia'
+
+import { useUserStore } from '@/stores/user'
+import UnauthLayout from '@/UnauthLayout.vue'
 
 export default {
   name: 'SignOutPage',

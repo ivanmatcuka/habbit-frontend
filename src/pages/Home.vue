@@ -1,14 +1,13 @@
 <template>
   <auth-layout>
     <div class="d-flex flex-column gap-6">
-      <!-- Current date -->
       <nav class="d-flex align-items-center justify-content-between">
         <b-button variant="outline-light" @click="goDayBack">
-          <chevron-left />
+          <chevron-left-icon />
         </b-button>
         <h1 class="text-center text-white">{{ date.format('MMM Do YYYY') }}</h1>
         <b-button variant="outline-light" :disabled="!canGoForward" @click="goDayForward">
-          <chevron-right />
+          <chevron-right-icon />
         </b-button>
       </nav>
 
@@ -39,7 +38,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import tasksService, { type Task } from '../services/tasks'
+import tasksService, { type Task } from '@/services/tasks'
 import moment from 'moment'
 import AuthLayout from '@/AuthLayout.vue'
 
@@ -64,9 +63,9 @@ export default defineComponent({
   computed: {
     completedTasks() {
       return this.tasks.filter((task) =>
-        task.completions.some((completion) => {
-          return moment(completion.completed_at).isSame(this.date, 'day')
-        }),
+        task.completions.some((completion) =>
+          moment(completion.completed_at).isSame(this.date, 'day'),
+        ),
       )
     },
 
@@ -90,19 +89,20 @@ export default defineComponent({
       const { error } = await tasksService.completeTask(String(id), {
         completed_at: this.date.format('YYYY-MM-DD HH:mm:ss'),
       })
+      if (error) return
 
-      if (!error) {
-        this.fetchTasks()
-      }
+      this.fetchTasks()
     },
 
     async uncompleteTask(task: Task) {
-      const completion = task.completions.find((completion) => {
-        return moment(completion.completed_at).isSame(this.date, 'day')
-      })
+      const completion = task.completions.find(({ completed_at }) =>
+        moment(completed_at).isSame(this.date, 'day'),
+      )
 
       if (completion) {
-        await tasksService.uncompleteTask(String(completion.id))
+        const { error } = await tasksService.uncompleteTask(String(completion.id))
+        if (error) return
+
         this.fetchTasks()
       }
     },

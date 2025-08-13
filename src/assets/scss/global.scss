@@ -104,6 +104,7 @@ $border-radius-xxl: $spacer * 5;
   --bs-btn-active-border-color: white;
   --bs-btn-border-radius: #{$border-radius-sm};
   --bs-btn-disabled-border-color: transparent;
+  --bs-btn-line-height: 32px;
 }
 
 .btn-danger {

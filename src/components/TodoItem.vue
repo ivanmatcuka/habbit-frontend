@@ -18,17 +18,19 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
+
 import { type Task } from '@/services/tasks'
-import CirclieIcon from './CirclieIcon.vue'
-import CheckedCirclieIcon from './CheckedCirclieIcon.vue'
+
+import CirclieIcon from '../icons/CirclieIcon.vue'
+import CheckedCirclieIcon from '../icons/CheckedCirclieIcon.vue'
 
 export default defineComponent({
   name: 'TodoItem',
   components: { CirclieIcon, CheckedCirclieIcon },
 
   props: {
-    task: Object as PropType<Task>,
     done: Boolean,
+    task: Object as PropType<Task>,
     onDo: Function as PropType<(payload: MouseEvent) => void>,
   },
 })

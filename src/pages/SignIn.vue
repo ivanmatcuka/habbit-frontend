@@ -1,41 +1,39 @@
 <template>
   <unauth-layout>
-    <b-form class="d-flex flex-column mt-5 gap-4" :validated="!!error" @submit="submit">
+    <b-form class="d-flex flex-column mt-5 gap-4" @submit="submit">
       <h1 class="text-white">Sign In</h1>
 
       <!-- Email field -->
-      <b-form-group
-        label-size="lg"
+      <h-input
         label="Email"
-        description="Enter your email address"
-        label-class="mb-1 p-0"
-      >
-        <b-form-input
-          v-model="email"
-          class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
-          placeholder="Enter email"
-          required
-        />
-      </b-form-group>
+        description="Enter your email"
+        placeholder="Enter email"
+        name="email"
+        type="email"
+        :value="email"
+        :error="error"
+        @update:value="email = $event"
+      />
 
       <!-- Password field -->
-      <b-form-group
-        label-size="lg"
+      <h-input
         label="Password"
         description="Enter your password"
-        label-class="mb-1 p-0"
-      >
-        <b-form-input
-          v-model="password"
-          type="password"
-          class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
-          placeholder="Enter password"
-          required
-        />
-      </b-form-group>
+        placeholder="Enter password"
+        name="password"
+        type="password"
+        :value="password"
+        :error="error"
+        @update:value="password = $event"
+      />
 
-      <div>
+      <b-form-text v-if="error?.message && !error?.errors" text-variant="danger">
+        {{ error.message }}
+      </b-form-text>
+
+      <div class="d-flex gap-2">
         <b-button :loading="isLoading" type="submit" variant="dark" loading-fill>Sign In</b-button>
+        <b-button :disabled="isLoading" variant="outline-light" to="/signup">Sign Up</b-button>
       </div>
     </b-form>
   </unauth-layout>
@@ -49,7 +47,11 @@ import { mapStores } from 'pinia'
 
 type SignInPageState = {
   isLoading: boolean
-  error: string
+  error: {
+    errors?: Record<string, string[]>
+    message?: string
+    code?: string
+  }
   email: string
   password: string
 }
@@ -63,7 +65,7 @@ export default {
       isLoading: false,
       email: '',
       password: '',
-      error: '',
+      error: {},
     }
   },
 
@@ -75,16 +77,12 @@ export default {
     async submit(event: Event) {
       event.preventDefault()
 
-      const fields = {
-        email: this.email,
-        password: this.password,
-      }
-
       this.isLoading = true
 
-      const { data, error } = await userService.signIn(fields.email, fields.password)
+      const { email, password } = this
+      const { data, error } = await userService.signIn(email, password)
 
-      this.error = error ?? ''
+      this.error = error ?? {}
       this.isLoading = false
 
       if (data?.user) {

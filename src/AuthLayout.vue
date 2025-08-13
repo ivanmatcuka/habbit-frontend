@@ -3,8 +3,10 @@
     <b-container class="my-8 text-white">
       <nav class="d-flex gap-2 align-items-center justify-content-between mb-8">
         <div class="d-flex gap-2">
-          <b-button to="/" variant="dark" :active="isActive('home')">Dashboard</b-button>
-          <b-button to="/habits" variant="dark" :active="isActive('habits')">Habits</b-button>
+          <b-button to="/" variant="outline-light" :active="isActive('home')">Dashboard</b-button>
+          <b-button to="/habits" variant="outline-light" :active="isActive('habits')"
+            >Habits</b-button
+          >
         </div>
         <b-dropdown variant="outline-light" offset="8">
           <template #button-content><user-icon /></template>

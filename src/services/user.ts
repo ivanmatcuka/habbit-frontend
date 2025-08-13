@@ -1,5 +1,5 @@
-import api from '../utils/api'
 import { AxiosError } from 'axios'
+import api from '@/utils/api'
 import localStorageService from '@/services/localStorage'
 
 export type UserResponse = {
@@ -55,7 +55,57 @@ export default {
       return { data: response.data }
     } catch (error) {
       console.error('Error signing in:', error)
-      return { error: 'Failed to sign in. Details: ' + (error as AxiosError).message }
+
+      const { code, response } = error as AxiosError<{
+        errors?: Record<string, string[]>
+        message?: string
+      }>
+
+      const errors = response?.data ? response.data.errors : undefined
+      const message = response?.data ? response.data.message : undefined
+
+      return {
+        error: {
+          message,
+          code,
+          errors,
+        },
+      }
+    }
+  },
+
+  async signUp(name: string, email: string, password: string, confirmPassword: string) {
+    try {
+      const csrfToken = await this.csrfToken()
+      const response = await api.post<LoginResponse>(
+        'api/register',
+        { name, email, password, password_confirmation: confirmPassword },
+        {
+          headers: {
+            'X-XSRF-TOKEN': csrfToken,
+          },
+        },
+      )
+
+      return { data: response.data }
+    } catch (error) {
+      console.error('Error signing up:', error)
+
+      const { code, response } = error as AxiosError<{
+        errors?: Record<string, string[]>
+        message?: string
+      }>
+
+      const errors = response?.data ? response.data.errors : undefined
+      const message = response?.data ? response.data.message : undefined
+
+      return {
+        error: {
+          message,
+          code,
+          errors,
+        },
+      }
     }
   },
 

@@ -50,8 +50,8 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 import tasksService, { type Task } from '@/services/tasks'
-import EditIcon from './EditIcon.vue'
-import TrashIcon from './TrashIcon.vue'
+import EditIcon from '../icons/EditIcon.vue'
+import TrashIcon from '../icons/TrashIcon.vue'
 
 export default defineComponent({
   name: 'HabitItem',

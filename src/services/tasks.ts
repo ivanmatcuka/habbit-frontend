@@ -1,5 +1,5 @@
 import axios from 'axios'
-import api from '../utils/api'
+import api from '@/utils/api'
 import localStorageService from '@/services/localStorage'
 
 const API_URL = import.meta.env.VITE_API_URL

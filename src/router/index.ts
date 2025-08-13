@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '../components/Home.vue'
-import HabitsPage from '../components/Habits.vue'
-import EditPage from '../components/Edit.vue'
-import AddPage from '../components/Add.vue'
+
 import { userStore } from '@/main'
-import SignInPage from '@/components/SignIn.vue'
-import SignOut from '@/components/SignOut.vue'
+import HomePage from '@/pages/Home.vue'
+import HabitsPage from '@/pages/Habits.vue'
+import EditPage from '@/pages/Edit.vue'
+import AddPage from '@/pages/Add.vue'
+import SignInPage from '@/pages/SignIn.vue'
+import SignUpPage from '@/pages/SignUp.vue'
+import SignOut from '@/pages/SignOut.vue'
 
 const router = createRouter({
   history: createWebHistory('/'),
@@ -23,7 +25,7 @@ const router = createRouter({
     { path: '/edit/:id', component: EditPage },
     { path: '/add', component: AddPage },
     { path: '/signin', component: SignInPage, name: 'signin' },
-    { path: '/signup', component: SignInPage, name: 'signup' },
+    { path: '/signup', component: SignUpPage, name: 'signup' },
     { path: '/signout', component: SignOut, name: 'signout' },
   ],
 })
