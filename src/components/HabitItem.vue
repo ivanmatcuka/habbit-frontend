@@ -50,8 +50,9 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 import tasksService, { type Task } from '@/services/tasks'
-import EditIcon from '../icons/EditIcon.vue'
-import TrashIcon from '../icons/TrashIcon.vue'
+import EditIcon from '@/icons/EditIcon.vue'
+import TrashIcon from '@/icons/TrashIcon.vue'
+import { getFrequencyString } from '@/utils/getFrequencyString'
 
 export default defineComponent({
   name: 'HabitItem',
@@ -70,6 +71,7 @@ export default defineComponent({
   },
 
   methods: {
+    getFrequencyString,
     async confirmDelete() {
       if (!this.task) return
 
@@ -82,13 +84,6 @@ export default defineComponent({
       }
 
       this.isDeleting = false
-    },
-
-    getFrequencyString(n: number) {
-      let times = 'time'
-      if (n !== 1) times = times + 's'
-
-      return `${n} ${times} per week`
     },
   },
 })

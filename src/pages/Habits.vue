@@ -63,16 +63,6 @@ export default {
     async confirmDelete(selectedTaskId?: number) {
       this.tasks = this.tasks.filter((task) => task.id !== selectedTaskId)
     },
-
-    getFrequencyString(n: number) {
-      let times = 'time'
-
-      if (n !== 1) {
-        times = times + 's'
-      }
-
-      return `${n} ${times} per week`
-    },
   },
 }
 </script>
