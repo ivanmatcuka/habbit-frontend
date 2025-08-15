@@ -1,5 +1,5 @@
 <template>
-  <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+  <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
     <rect x="1" y="1" width="24" height="24" rx="12" fill="#585552" />
     <rect x="1" y="1" width="24" height="24" rx="12" stroke="white" stroke-width="2" />
     <path

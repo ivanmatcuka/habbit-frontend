@@ -1,8 +1,8 @@
 <template>
   <b-card class="rounded-3 border-2" bg-variant="dark-subtle">
-    <b-card-body class="py-3 px-4 d-flex justify-content-between">
+    <div class="d-flex justify-content-between">
       <slot />
-    </b-card-body>
+    </div>
   </b-card>
 </template>
 

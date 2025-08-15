@@ -57,6 +57,7 @@ export default {
 
   async mounted() {
     this.isLoading = true
+
     const { data, error } = await tasksService.getTasks()
 
     if (error) {
@@ -68,7 +69,7 @@ export default {
   },
 
   methods: {
-    async confirmDelete(selectedTaskId?: number) {
+    confirmDelete(selectedTaskId?: number) {
       this.tasks = this.tasks.filter((task) => task.id !== selectedTaskId)
     },
   },

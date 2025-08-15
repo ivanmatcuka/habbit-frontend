@@ -20,6 +20,7 @@
               :done="false"
               :task="task"
               :on-do="() => completeTask(task.id)"
+              :is-completing="isCompletingId === task.id"
             />
           </div>
           <div v-if="completedTasks.length" class="d-flex flex-column gap-2">
@@ -30,6 +31,7 @@
               :done="true"
               :task="task"
               :on-do="() => uncompleteTask(task)"
+              :is-completing="isCompletingId === task.id"
             />
           </div>
         </div>
@@ -47,6 +49,7 @@ import AuthLayout from '@/AuthLayout.vue'
 type HomePageState = {
   tasks: Task[]
   isLoading: boolean
+  isCompletingId: number | null
   date: ReturnType<typeof moment>
 }
 
@@ -58,6 +61,7 @@ export default {
     return {
       tasks: [],
       isLoading: false,
+      isCompletingId: null,
       date: moment(),
     }
   },
@@ -84,19 +88,22 @@ export default {
 
   methods: {
     async completeTask(id: number) {
-      this.isLoading = true
+      this.isCompletingId = id
 
       const { error } = await tasksService.completeTask(String(id), {
         completed_at: this.date.format('YYYY-MM-DD HH:mm:ss'),
       })
-      this.isLoading = false
-      if (error) return
+
+      if (error) {
+        this.isCompletingId = null
+        return
+      }
 
       this.fetchTasks()
     },
 
     async uncompleteTask(task: Task) {
-      this.isLoading = true
+      this.isCompletingId = task.id
 
       const completion = task.completions.find(({ completed_at }) =>
         moment(completed_at).isSame(this.date, 'day'),
@@ -104,16 +111,18 @@ export default {
 
       if (completion) {
         const { error } = await tasksService.uncompleteTask(String(completion.id))
-        this.isLoading = false
 
-        if (error) return
+        if (error) {
+          this.isCompletingId = null
+          return
+        }
 
         this.fetchTasks()
       }
     },
 
     async fetchTasks() {
-      this.isLoading = true
+      this.isLoading = this.tasks.length === 0
 
       const { data, error } = await tasksService.getTasks()
 
@@ -123,6 +132,7 @@ export default {
 
       this.tasks = data ?? []
       this.isLoading = false
+      this.isCompletingId = null
     },
   },
 }

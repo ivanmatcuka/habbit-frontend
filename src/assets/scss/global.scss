@@ -135,3 +135,7 @@ $border-radius-xxl: $spacer * 5;
   --bs-dropdown-item-padding-y: #{$spacer};
   --bs-dropdown-border-radius: #{$border-radius-sm};
 }
+
+.card-body {
+  padding: #{$spacer * 3};
+}
