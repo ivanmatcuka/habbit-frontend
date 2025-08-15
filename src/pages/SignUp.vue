@@ -52,7 +52,7 @@
       />
 
       <b-form-text v-if="error?.message && !error?.errors" text-variant="danger">
-        {{ error.message }}
+        Error occurred. Please try again later
       </b-form-text>
 
       <div class="d-flex gap-2">

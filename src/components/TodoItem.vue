@@ -1,9 +1,5 @@
 <template>
-  <b-card
-    class="rounded-3 border-2"
-    body-class="py-3 px-4 d-flex justify-content-between"
-    bg-variant="dark-subtle"
-  >
+  <row-item>
     <div class="d-flex gap-2 align-items-center">
       <b-button class="p-0" variant="link" size="sm" @click="onDo">
         <CirclieIcon v-if="!done" />
@@ -13,25 +9,26 @@
         {{ task?.title }}
       </b-card-text>
     </div>
-  </b-card>
+  </row-item>
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
+import { type PropType } from 'vue'
 
 import { type Task } from '@/services/tasks'
+import CirclieIcon from '@/icons/CirclieIcon.vue'
+import CheckedCirclieIcon from '@/icons/CheckedCirclieIcon.vue'
 
-import CirclieIcon from '../icons/CirclieIcon.vue'
-import CheckedCirclieIcon from '../icons/CheckedCirclieIcon.vue'
+import RowItem from './RowItem.vue'
 
-export default defineComponent({
+export default {
   name: 'TodoItem',
-  components: { CirclieIcon, CheckedCirclieIcon },
+  components: { CirclieIcon, CheckedCirclieIcon, RowItem },
 
   props: {
     done: Boolean,
     task: Object as PropType<Task>,
     onDo: Function as PropType<(payload: MouseEvent) => void>,
   },
-})
+}
 </script>

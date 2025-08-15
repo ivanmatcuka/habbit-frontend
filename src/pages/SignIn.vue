@@ -28,22 +28,28 @@
       />
 
       <b-form-text v-if="error?.message && !error?.errors" text-variant="danger">
-        {{ error.message }}
+        Error occurred. Please try again later
       </b-form-text>
 
-      <div class="d-flex gap-2">
+      <div class="d-flex gap-2 flex-wrap">
         <b-button :loading="isLoading" type="submit" variant="dark" loading-fill>Sign In</b-button>
         <b-button :disabled="isLoading" variant="outline-light" to="/signup">Sign Up</b-button>
+        <div class="w-100">
+          <b-button :disabled="isLoading" variant="link" to="/recover-password"
+            >Forgot Password?</b-button
+          >
+        </div>
       </div>
     </b-form>
   </unauth-layout>
 </template>
 
 <script lang="ts">
+import { mapStores } from 'pinia'
+
 import UnauthLayout from '@/UnauthLayout.vue'
 import userService from '@/services/user'
 import { useUserStore } from '@/stores/user'
-import { mapStores } from 'pinia'
 
 type SignInPageState = {
   isLoading: boolean

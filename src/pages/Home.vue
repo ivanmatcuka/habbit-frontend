@@ -1,35 +1,37 @@
 <template>
   <auth-layout>
     <div class="d-flex flex-column gap-6">
-      <nav class="d-flex align-items-center justify-content-between">
-        <b-button variant="outline-light" @click="goDayBack">
-          <chevron-left-icon />
-        </b-button>
-        <h1 class="text-center text-white">{{ date.format('MMM Do YYYY') }}</h1>
-        <b-button variant="outline-light" :disabled="!canGoForward" @click="goDayForward">
-          <chevron-right-icon />
-        </b-button>
-      </nav>
+      <date-picker :date="date" @update:date="date = $event" />
 
-      <div class="mt-4 d-flex flex-column gap-2">
-        <h2 class="text-white">To-Do</h2>
-
-        <div class="d-flex flex-column gap-2">
-          <todo-item
-            v-for="task in uncompletedTasks"
-            :key="task.id"
-            :done="false"
-            :task="task"
-            :on-do="() => completeTask(task.id)"
-          />
+      <div class="mt-4">
+        <div v-if="isLoading" class="d-flex flex-column gap-2">
+          <h2 class="text-white">Loading...</h2>
+          <row-item v-for="value in Array(3).fill(0)" :key="value">
+            <b-placeholder size="lg" animation="glow" />
+          </row-item>
         </div>
-      </div>
 
-      <div v-if="completedTasks.length" class="mt-4 d-flex flex-column gap-2">
-        <h2 class="text-white">Done</h2>
-
-        <div v-for="task in completedTasks" :key="task.id">
-          <todo-item :done="true" :task="task" :on-do="() => uncompleteTask(task)" />
+        <div v-else class="d-flex flex-column gap-8">
+          <div v-if="uncompletedTasks.length" class="d-flex flex-column gap-2">
+            <h2 class="text-white">To-Do</h2>
+            <todo-item
+              v-for="task in uncompletedTasks"
+              :key="task.id"
+              :done="false"
+              :task="task"
+              :on-do="() => completeTask(task.id)"
+            />
+          </div>
+          <div v-if="completedTasks.length" class="d-flex flex-column gap-2">
+            <h2 class="text-white">Done</h2>
+            <todo-item
+              v-for="task in completedTasks"
+              :key="task.id"
+              :done="true"
+              :task="task"
+              :on-do="() => uncompleteTask(task)"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -37,9 +39,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import tasksService, { type Task } from '@/services/tasks'
 import moment from 'moment'
+
+import tasksService, { type Task } from '@/services/tasks'
 import AuthLayout from '@/AuthLayout.vue'
 
 type HomePageState = {
@@ -48,7 +50,7 @@ type HomePageState = {
   date: ReturnType<typeof moment>
 }
 
-export default defineComponent({
+export default {
   name: 'HomePage',
   components: { AuthLayout },
 
@@ -74,10 +76,6 @@ export default defineComponent({
 
       return this.tasks.filter((task) => !completedIds.includes(task.id))
     },
-
-    canGoForward() {
-      return moment().diff(this.date, 'days') > 0
-    },
   },
 
   async mounted() {
@@ -86,21 +84,28 @@ export default defineComponent({
 
   methods: {
     async completeTask(id: number) {
+      this.isLoading = true
+
       const { error } = await tasksService.completeTask(String(id), {
         completed_at: this.date.format('YYYY-MM-DD HH:mm:ss'),
       })
+      this.isLoading = false
       if (error) return
 
       this.fetchTasks()
     },
 
     async uncompleteTask(task: Task) {
+      this.isLoading = true
+
       const completion = task.completions.find(({ completed_at }) =>
         moment(completed_at).isSame(this.date, 'day'),
       )
 
       if (completion) {
         const { error } = await tasksService.uncompleteTask(String(completion.id))
+        this.isLoading = false
+
         if (error) return
 
         this.fetchTasks()
@@ -119,14 +124,12 @@ export default defineComponent({
       this.tasks = data ?? []
       this.isLoading = false
     },
-
-    goDayBack() {
-      this.date = this.date.clone().subtract(1, 'days')
-    },
-
-    goDayForward() {
-      this.date = this.date.clone().add(1, 'days')
-    },
   },
-})
+}
 </script>
+
+<style lang="scss" scoped>
+.placeholder-glow {
+  flex: 1;
+}
+</style>

@@ -1,9 +1,6 @@
 <template>
-  <b-card
-    class="rounded-3 border-2"
-    body-class="py-3 px-4 d-flex gap-2 justify-content-between"
-    bg-variant="dark-subtle"
-  >
+  <row-item>
+    <!-- Content -->
     <div v-if="task" class="d-flex flex-column">
       <b-card-text class="text-white fs-4 mb-1">
         {{ task.title }}
@@ -12,6 +9,8 @@
         {{ getFrequencyString(task.frequency) }}
       </b-card-text>
     </div>
+
+    <!-- Controls -->
     <div class="d-flex gap-1 flex-column align-items-center">
       <b-button class="p-1" variant="link" :to="`/edit/${task?.id}`">
         <edit-icon />
@@ -44,17 +43,18 @@
         </div>
       </b-tooltip>
     </div>
-  </b-card>
+  </row-item>
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
+import { type PropType } from 'vue'
+
 import tasksService, { type Task } from '@/services/tasks'
 import EditIcon from '@/icons/EditIcon.vue'
 import TrashIcon from '@/icons/TrashIcon.vue'
 import { getFrequencyString } from '@/utils/getFrequencyString'
 
-export default defineComponent({
+export default {
   name: 'HabitItem',
   components: { EditIcon, TrashIcon },
 
@@ -86,5 +86,5 @@ export default defineComponent({
       this.isDeleting = false
     },
   },
-})
+}
 </script>

@@ -20,6 +20,10 @@ export type LoginResponse = {
   status: string
 }
 
+export type RecoverResponse = {
+  status: string
+}
+
 export type User = Pick<UserResponse, 'id' | 'name' | 'email' | 'created_at' | 'updated_at'>
 
 export default {
@@ -90,6 +94,41 @@ export default {
       return { data: response.data }
     } catch (error) {
       console.error('Error signing up:', error)
+
+      const { code, response } = error as AxiosError<{
+        errors?: Record<string, string[]>
+        message?: string
+      }>
+
+      const errors = response?.data ? response.data.errors : undefined
+      const message = response?.data ? response.data.message : undefined
+
+      return {
+        error: {
+          message,
+          code,
+          errors,
+        },
+      }
+    }
+  },
+
+  async recoverPassword(email: string) {
+    try {
+      const csrfToken = await this.csrfToken()
+
+      const response = await api.post<RecoverResponse>(
+        'api/recover',
+        { email },
+        {
+          headers: {
+            'X-XSRF-TOKEN': csrfToken,
+          },
+        },
+      )
+      return { data: response.data }
+    } catch (error) {
+      console.error('Error recovering password:', error)
 
       const { code, response } = error as AxiosError<{
         errors?: Record<string, string[]>

@@ -7,7 +7,8 @@ import EditPage from '@/pages/Edit.vue'
 import AddPage from '@/pages/Add.vue'
 import SignInPage from '@/pages/SignIn.vue'
 import SignUpPage from '@/pages/SignUp.vue'
-import SignOut from '@/pages/SignOut.vue'
+import SignOutPage from '@/pages/SignOut.vue'
+import RecoverPasswordPage from '@/pages/RecoverPassword.vue'
 
 const router = createRouter({
   history: createWebHistory('/'),
@@ -26,12 +27,15 @@ const router = createRouter({
     { path: '/add', component: AddPage },
     { path: '/signin', component: SignInPage, name: 'signin' },
     { path: '/signup', component: SignUpPage, name: 'signup' },
-    { path: '/signout', component: SignOut, name: 'signout' },
+    { path: '/signout', component: SignOutPage, name: 'signout' },
+    { path: '/recover-password', component: RecoverPasswordPage, name: 'recover-password' },
   ],
 })
 
+const unauthRoutes = ['signin', 'signup', 'recover-password']
+
 router.beforeEach((to, _, next) => {
-  const isAuthRoute = to.name === 'signin' || to.name === 'signup'
+  const isAuthRoute = unauthRoutes.includes(String(to.name))
   const isLoggedIn = userStore?.isLoggedIn
 
   if (isLoggedIn && isAuthRoute) {

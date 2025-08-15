@@ -1,26 +1,27 @@
 <template>
-  <main id="app">
-    <b-container class="my-8 text-white">
-      <nav class="d-flex gap-2 align-items-center justify-content-between mb-8">
-        <div class="d-flex gap-2">
-          <b-button to="/" variant="outline-light" :active="isActive('home')">Dashboard</b-button>
-          <b-button to="/habits" variant="outline-light" :active="isActive('habits')"
-            >Habits</b-button
-          >
-        </div>
-        <b-dropdown variant="outline-light" offset="8">
-          <template #button-content><user-icon /></template>
-          <b-dropdown-item to="/signout">Sign Out</b-dropdown-item>
-        </b-dropdown>
-      </nav>
-      <slot />
-    </b-container>
+  <main id="app" class="my-8 text-white m-auto">
+    <nav class="d-flex gap-2 align-items-center justify-content-between mb-8">
+      <div class="d-flex gap-2">
+        <b-button to="/" variant="outline-light" :active="isActive('home')">Dashboard</b-button>
+        <b-button to="/habits" variant="outline-light" :active="isActive('habits')"
+          >Habits</b-button
+        >
+      </div>
+      <b-dropdown variant="outline-light" offset="8">
+        <template #button-content><user-icon /></template>
+        <b-dropdown-item to="/signout">Sign Out</b-dropdown-item>
+      </b-dropdown>
+    </nav>
+    <slot />
   </main>
 </template>
 
 <script lang="ts">
+import UserIcon from '@/icons/UserIcon.vue'
+
 export default {
   name: 'AuthLayout',
+  components: { UserIcon },
 
   methods: {
     isActive(name: string) {
@@ -32,7 +33,6 @@ export default {
 
 <style scoped>
 #app {
-  margin: auto;
   max-width: 768px;
 }
 </style>
