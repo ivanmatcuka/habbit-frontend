@@ -9,6 +9,9 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolve from 'unplugin-icons/resolver'
 
 export default defineConfig({
+  preview: {
+    allowedHosts: true,
+  },
   plugins: [
     vue(),
     vueDevTools(),
