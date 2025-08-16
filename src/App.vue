@@ -4,9 +4,11 @@
 
 <script lang="ts">
 import { mapStores } from 'pinia'
-import { useUserStore } from './stores/user'
+import { defineComponent } from 'vue'
 
-export default {
+import { useUserStore } from '@/stores/user'
+
+export default defineComponent({
   name: 'App',
   components: {},
   computed: {
@@ -22,7 +24,7 @@ export default {
       return this.$route.name === name
     },
   },
-}
+})
 </script>
 
 <style lang="scss">
@@ -33,7 +35,8 @@ export default {
 }
 </style>
 
-<style lang="sass" scoped>
-.nav-link.active a
-  color: white
+<style lang="scss" scoped>
+.nav-link.active a {
+  color: white;
+}
 </style>
