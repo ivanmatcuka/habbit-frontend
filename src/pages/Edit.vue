@@ -1,5 +1,6 @@
 <template>
-  <auth-layout v-if="task">
+  <page-placeholder v-if="isLoading && !task" />
+  <auth-layout v-else-if="task">
     <b-form class="d-flex flex-column mt-5 gap-4" @submit="submit">
       <h1 class="text-white">Edit Task "{{ task.title }}"</h1>
 
@@ -75,10 +76,15 @@ export default {
   },
 
   async mounted() {
+    this.isLoading = true
+
     const { data, error } = await tasksService.getTask(this.$route.params.id as string)
+
+    this.isLoading = false
 
     if (error) {
       console.error('Failed to fetch tasks:', error)
+      return
     }
 
     this.task = data ?? null

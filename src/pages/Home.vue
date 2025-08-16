@@ -6,9 +6,7 @@
       <div class="mt-4">
         <div v-if="isLoading" class="d-flex flex-column gap-2">
           <h2 class="text-white">Loading...</h2>
-          <row-item v-for="value in Array(3).fill(0)" :key="value">
-            <b-placeholder size="lg" animation="glow" />
-          </row-item>
+          <todo-item-placeholder v-for="value in Array(3).fill(0)" :key="value" />
         </div>
 
         <div v-else class="d-flex flex-column gap-8">

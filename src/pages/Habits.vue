@@ -2,10 +2,9 @@
   <auth-layout>
     <div v-if="isLoading" class="d-flex flex-column gap-2 mb-6">
       <h2 class="text-white">Loading...</h2>
-      <row-item v-for="value in Array(5).fill(0)" :key="value">
-        <b-placeholder size="lg" animation="glow" />
-      </row-item>
+      <habit-item-placeholder v-for="value in Array(3).fill(0)" :key="value" />
     </div>
+
     <div v-else class="d-flex flex-column gap-2 mb-6">
       <h2 class="text-white">Tasks</h2>
       <habit-item v-for="task in tasks" :key="task.id" :task="task" :on-delete="confirmDelete" />
