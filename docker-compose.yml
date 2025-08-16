@@ -1,9 +1,13 @@
+networks:
+  proxy-network:
+    external: true
+
 services:
   habit_app:
     build: .
     container_name: habit_app
     ports:
       - 8080
-    volumes:
-      - ./:/app
-    command: npm run host
+    restart: unless-stopped
+    networks:
+      - proxy-network
