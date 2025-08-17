@@ -28,7 +28,7 @@
 import AuthLayout from '@/AuthLayout.vue'
 
 export default {
-  name: 'PagePlaceholder',
   components: { AuthLayout },
+  name: 'PagePlaceholder',
 }
 </script>

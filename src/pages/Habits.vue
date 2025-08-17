@@ -19,39 +19,43 @@ import AuthLayout from '@/AuthLayout.vue'
 import tasksService, { type Task } from '@/services/tasks'
 
 const OPTIONS = [
-  { value: 1, text: 1 },
-  { value: 2, text: 2 },
-  { value: 3, text: 3 },
-  { value: 4, text: 4 },
-  { value: 5, text: 5 },
-  { value: 6, text: 6 },
-  { value: 7, text: 7 },
+  { text: 1, value: 1 },
+  { text: 2, value: 2 },
+  { text: 3, value: 3 },
+  { text: 4, value: 4 },
+  { text: 5, value: 5 },
+  { text: 6, value: 6 },
+  { text: 7, value: 7 },
 ]
 
 type HabitsPageState = {
+  frequency: null | number
   isLoading: boolean
-  title: string
-  frequency: number | null
-  tasks: Task[]
-  selectedTaskId: number | null
   modal: boolean
   options: typeof OPTIONS
+  selectedTaskId: null | number
+  tasks: Task[]
+  title: string
 }
 
 export default {
-  name: 'HabitsPage',
   components: { AuthLayout },
-
   data(): HabitsPageState {
     return {
-      isLoading: false,
-      title: '',
       frequency: null,
-      tasks: [],
-      selectedTaskId: null,
+      isLoading: false,
       modal: false,
       options: OPTIONS,
+      selectedTaskId: null,
+      tasks: [],
+      title: '',
     }
+  },
+
+  methods: {
+    confirmDelete(selectedTaskId?: number) {
+      this.tasks = this.tasks.filter((task) => task.id !== selectedTaskId)
+    },
   },
 
   async mounted() {
@@ -67,11 +71,7 @@ export default {
     this.isLoading = false
   },
 
-  methods: {
-    confirmDelete(selectedTaskId?: number) {
-      this.tasks = this.tasks.filter((task) => task.id !== selectedTaskId)
-    },
-  },
+  name: 'HabitsPage',
 }
 </script>
 

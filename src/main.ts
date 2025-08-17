@@ -1,15 +1,17 @@
-import App from './App.vue'
-import router from './router'
+import { createBootstrap } from 'bootstrap-vue-next'
+import { createPinia } from 'pinia'
 
 // Bootstrap
 import '@/assets/scss/global.scss'
 
 import { createApp } from 'vue'
-import { createBootstrap } from 'bootstrap-vue-next'
-import { createPinia } from 'pinia'
-import { useUserStore } from './stores/user'
+
 import localStorageService from '@/services/localStorage'
 import userService from '@/services/user'
+
+import App from './App.vue'
+import router from './router'
+import { useUserStore } from './stores/user'
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -17,7 +19,7 @@ const app = createApp(App)
 app.use(createBootstrap())
 app.use(pinia)
 
-let userStore: ReturnType<typeof useUserStore> | null = null
+let userStore: null | ReturnType<typeof useUserStore> = null
 userStore = useUserStore()
 
 if (localStorageService.getAccessToken()) {

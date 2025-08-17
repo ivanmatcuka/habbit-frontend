@@ -9,21 +9,21 @@ import { defineComponent } from 'vue'
 import { useUserStore } from '@/stores/user'
 
 export default defineComponent({
-  name: 'App',
   components: {},
   computed: {
     ...mapStores(useUserStore),
+  },
+  methods: {
+    isActive(name: string) {
+      return this.$route.name === name
+    },
   },
 
   mounted() {
     console.log('App mounted', this.userStore.isLoggedIn)
   },
 
-  methods: {
-    isActive(name: string) {
-      return this.$route.name === name
-    },
-  },
+  name: 'App',
 })
 </script>
 

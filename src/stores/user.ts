@@ -1,33 +1,34 @@
 export type User = {
+  created_at?: string
+  email: string
+  email_verified_at?: null | string
   id?: number
   name: string
-  email: string
   password?: string
-  remember_token?: string | null
-  email_verified_at?: string | null
-  created_at?: string
+  remember_token?: null | string
   updated_at?: string
 }
 
 import { defineStore } from 'pinia'
+
 import localStorageService from '@/services/localStorage'
 
 export const useUserStore = defineStore('user', {
-  state: () => ({
-    user: null as User | null,
-  }),
   actions: {
-    setUser(user: User, accessToken: string) {
-      this.user = user
-      localStorageService.setAccessToken(accessToken)
-    },
     clearUser() {
       this.user = null
       localStorageService.removeAccessToken()
     },
+    setUser(user: User, accessToken: string) {
+      this.user = user
+      localStorageService.setAccessToken(accessToken)
+    },
   },
   getters: {
-    isLoggedIn: (state) => !!state.user,
     getUser: (state) => state.user,
+    isLoggedIn: (state) => !!state.user,
   },
+  state: () => ({
+    user: null as null | User,
+  }),
 })

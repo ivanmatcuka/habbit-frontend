@@ -11,39 +11,39 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment'
+import moment from 'moment';
 
-import ChevronLeftIcon from '@/icons/ChevronLeftIcon.vue'
-import ChevronRightIcon from '@/icons/ChevronRightIcon.vue'
+import ChevronLeftIcon from '@/icons/ChevronLeftIcon.vue';
+import ChevronRightIcon from '@/icons/ChevronRightIcon.vue';
 
 export default {
-  name: 'DatePicker',
   components: { ChevronLeftIcon, ChevronRightIcon },
-
-  props: {
-    date: {
-      type: Object as () => ReturnType<typeof moment>,
-      required: true,
-    },
-  },
-  emits: ['update:date'],
 
   computed: {
     canGoForward() {
-      return moment().diff(this.date, 'days') > 0
+      return moment().diff(this.date, 'days') > 0;
     },
   },
-
+  emits: ['update:date'],
   methods: {
     goDayBack() {
-      const date = this.date.clone().subtract(1, 'days')
-      this.$emit('update:date', date)
+      const date = this.date.clone().subtract(1, 'days');
+      this.$emit('update:date', date);
     },
 
     goDayForward() {
-      const date = this.date.clone().add(1, 'days')
-      this.$emit('update:date', date)
+      const date = this.date.clone().add(1, 'days');
+      this.$emit('update:date', date);
     },
   },
-}
+
+  name: 'DatePicker',
+
+  props: {
+    date: {
+      required: true,
+      type: Object as () => ReturnType<typeof moment>,
+    },
+  },
+};
 </script>

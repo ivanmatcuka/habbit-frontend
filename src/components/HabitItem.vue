@@ -47,44 +47,44 @@
 </template>
 
 <script lang="ts">
-import { type PropType } from 'vue'
+import { type PropType } from 'vue';
 
-import tasksService, { type Task } from '@/services/tasks'
-import EditIcon from '@/icons/EditIcon.vue'
-import TrashIcon from '@/icons/TrashIcon.vue'
-import { getFrequencyString } from '@/utils/getFrequencyString'
+import EditIcon from '@/icons/EditIcon.vue';
+import TrashIcon from '@/icons/TrashIcon.vue';
+import tasksService, { type Task } from '@/services/tasks';
+import { getFrequencyString } from '@/utils/getFrequencyString';
 
 export default {
-  name: 'HabitItem',
   components: { EditIcon, TrashIcon },
-
-  props: {
-    task: Object as PropType<Task>,
-    onDelete: Function as PropType<(id?: number) => void>,
-  },
-
   data() {
     return {
-      modal: false,
       isDeleting: false,
-    }
+      modal: false,
+    };
   },
 
   methods: {
-    getFrequencyString,
     async confirmDelete() {
-      if (!this.task) return
+      if (!this.task) return;
 
-      this.isDeleting = true
+      this.isDeleting = true;
 
-      const { error } = await tasksService.deleteTask(String(this.task.id))
+      const { error } = await tasksService.deleteTask(String(this.task.id));
 
       if (!error) {
-        this.onDelete?.(this.task.id)
+        this.onDelete?.(this.task.id);
       }
 
-      this.isDeleting = false
+      this.isDeleting = false;
     },
+    getFrequencyString,
   },
-}
+
+  name: 'HabitItem',
+
+  props: {
+    onDelete: Function as PropType<(id?: number) => void>,
+    task: Object as PropType<Task>,
+  },
+};
 </script>

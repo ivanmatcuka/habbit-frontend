@@ -1,34 +1,34 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { userStore } from '@/main'
-import HomePage from '@/pages/Home.vue'
-import HabitsPage from '@/pages/Habits.vue'
-import EditPage from '@/pages/Edit.vue'
 import AddPage from '@/pages/Add.vue'
-import SignInPage from '@/pages/SignIn.vue'
-import SignUpPage from '@/pages/SignUp.vue'
-import SignOutPage from '@/pages/SignOut.vue'
+import EditPage from '@/pages/Edit.vue'
+import HabitsPage from '@/pages/Habits.vue'
+import HomePage from '@/pages/Home.vue'
 import RecoverPasswordPage from '@/pages/RecoverPassword.vue'
+import SignInPage from '@/pages/SignIn.vue'
+import SignOutPage from '@/pages/SignOut.vue'
+import SignUpPage from '@/pages/SignUp.vue'
 
 const router = createRouter({
   history: createWebHistory('/'),
   routes: [
     {
-      path: '/',
       component: HomePage,
       name: 'home',
+      path: '/',
     },
     {
-      path: '/habits',
       component: HabitsPage,
       name: 'habits',
+      path: '/habits',
     },
-    { path: '/edit/:id', component: EditPage },
-    { path: '/add', component: AddPage },
-    { path: '/signin', component: SignInPage, name: 'signin' },
-    { path: '/signup', component: SignUpPage, name: 'signup' },
-    { path: '/signout', component: SignOutPage, name: 'signout' },
-    { path: '/recover-password', component: RecoverPasswordPage, name: 'recover-password' },
+    { component: EditPage, path: '/edit/:id' },
+    { component: AddPage, path: '/add' },
+    { component: SignInPage, name: 'signin', path: '/signin' },
+    { component: SignUpPage, name: 'signup', path: '/signup' },
+    { component: SignOutPage, name: 'signout', path: '/signout' },
+    { component: RecoverPasswordPage, name: 'recover-password', path: '/recover-password' },
   ],
 })
 

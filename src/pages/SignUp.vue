@@ -64,39 +64,27 @@
 </template>
 
 <script lang="ts">
-import UnauthLayout from '@/UnauthLayout.vue'
-import userService from '@/services/user'
-import { useUserStore } from '@/stores/user'
 import { mapStores } from 'pinia'
 
+import userService from '@/services/user'
+import { useUserStore } from '@/stores/user'
+import UnauthLayout from '@/UnauthLayout.vue'
+
 type SignUpPageState = {
-  isLoading: boolean
-  name: string
-  email: string
-  password: string
   confirmPassword: string
+  email: string
   error: {
+    code?: string
     errors?: Record<string, string[]>
     message?: string
-    code?: string
   }
+  isLoading: boolean
+  name: string
+  password: string
 }
 
 export default {
-  name: 'SignUpPage',
   components: { UnauthLayout },
-
-  data(): SignUpPageState {
-    return {
-      isLoading: false,
-      email: '',
-      password: '',
-      confirmPassword: '',
-      name: '',
-      error: {},
-    }
-  },
-
   computed: {
     ...mapStores(useUserStore),
     confirmPasswordError() {
@@ -108,13 +96,24 @@ export default {
     },
   },
 
+  data(): SignUpPageState {
+    return {
+      confirmPassword: '',
+      email: '',
+      error: {},
+      isLoading: false,
+      name: '',
+      password: '',
+    }
+  },
+
   methods: {
     async submit(event: Event) {
       event.preventDefault()
 
       this.isLoading = true
 
-      const { name, email, password, confirmPassword } = this
+      const { confirmPassword, email, name, password } = this
       const { data, error } = await userService.signUp(name, email, password, confirmPassword)
 
       this.error = error ?? {}
@@ -126,5 +125,7 @@ export default {
       }
     },
   },
+
+  name: 'SignUpPage',
 }
 </script>

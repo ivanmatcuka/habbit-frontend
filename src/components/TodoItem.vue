@@ -16,21 +16,21 @@
 <script lang="ts">
 import { type PropType } from 'vue'
 
-import { type Task } from '@/services/tasks'
-import CirclieIcon from '@/icons/CirclieIcon.vue'
 import CheckedCirclieIcon from '@/icons/CheckedCirclieIcon.vue'
+import CirclieIcon from '@/icons/CirclieIcon.vue'
+import { type Task } from '@/services/tasks'
 
 import RowItem from './RowItem.vue'
 
 export default {
+  components: { CheckedCirclieIcon, CirclieIcon, RowItem },
   name: 'TodoItem',
-  components: { CirclieIcon, CheckedCirclieIcon, RowItem },
 
   props: {
-    isCompleting: Boolean,
     done: Boolean,
-    task: Object as PropType<Task>,
+    isCompleting: Boolean,
     onDo: Function as PropType<(payload: MouseEvent) => void>,
+    task: Object as PropType<Task>,
   },
 }
 </script>

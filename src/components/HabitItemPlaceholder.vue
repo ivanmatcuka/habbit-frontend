@@ -26,7 +26,7 @@ import EditIcon from '@/icons/EditIcon.vue'
 import TrashIcon from '@/icons/TrashIcon.vue'
 
 export default {
-  name: 'HabitItemPlaceholder',
   components: { EditIcon, TrashIcon },
+  name: 'HabitItemPlaceholder',
 }
 </script>

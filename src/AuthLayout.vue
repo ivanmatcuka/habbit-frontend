@@ -20,14 +20,14 @@
 import UserIcon from '@/icons/UserIcon.vue'
 
 export default {
-  name: 'AuthLayout',
   components: { UserIcon },
-
   methods: {
     isActive(name: string) {
       return this.$route.name === name
     },
   },
+
+  name: 'AuthLayout',
 }
 </script>
 

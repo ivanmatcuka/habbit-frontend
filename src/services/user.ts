@@ -1,122 +1,56 @@
-import { AxiosError } from 'axios'
-import api from '@/utils/api'
-import localStorageService from '@/services/localStorage'
+import { AxiosError } from 'axios';
 
-export type UserResponse = {
-  id?: number
-  name: string
-  email: string
-  password?: string
-  remember_token?: string | null
-  email_verified_at?: string | null
-  created_at?: string
-  updated_at?: string
-}
+import localStorageService from '@/services/localStorage';
+import api from '@/utils/api';
 
 export type LoginResponse = {
-  access_token: string
-  token_type: string
-  user: User
-  status: string
-}
+  access_token: string;
+  status: string;
+  token_type: string;
+  user: User;
+};
 
 export type RecoverResponse = {
-  status: string
-}
+  status: string;
+};
 
-export type User = Pick<UserResponse, 'id' | 'name' | 'email' | 'created_at' | 'updated_at'>
+export type User = Pick<UserResponse, 'created_at' | 'email' | 'id' | 'name' | 'updated_at'>;
+
+export type UserResponse = {
+  created_at?: string;
+  email: string;
+  email_verified_at?: null | string;
+  id?: number;
+  name: string;
+  password?: string;
+  remember_token?: null | string;
+  updated_at?: string;
+};
 
 export default {
+  async csrfToken() {
+    return await api.get('sanctum/csrf-cookie');
+  },
+
   async getUser() {
-    const accessToken = localStorageService.getAccessToken()
+    const accessToken = localStorageService.getAccessToken();
 
     try {
       const response = await api.get<UserResponse>('api/user', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      })
-      return { data: response.data }
+      });
+      return { data: response.data };
     } catch (error) {
-      console.error('Error fetching user:', error)
-      return { error: 'Failed to fetch user. Details: ' + (error as AxiosError).message }
-    }
-  },
-
-  async signIn(email: string, password: string) {
-    try {
-      const csrfToken = await this.csrfToken()
-      const response = await api.post<LoginResponse>(
-        'api/login',
-        { email, password },
-        {
-          headers: {
-            'X-XSRF-TOKEN': csrfToken,
-          },
-        },
-      )
-
-      return { data: response.data }
-    } catch (error) {
-      console.error('Error signing in:', error)
-
-      const { code, response } = error as AxiosError<{
-        errors?: Record<string, string[]>
-        message?: string
-      }>
-
-      const errors = response?.data ? response.data.errors : undefined
-      const message = response?.data ? response.data.message : undefined
-
-      return {
-        error: {
-          message,
-          code,
-          errors,
-          status: response?.status,
-        },
-      }
-    }
-  },
-
-  async signUp(name: string, email: string, password: string, confirmPassword: string) {
-    try {
-      const csrfToken = await this.csrfToken()
-      const response = await api.post<LoginResponse>(
-        'api/register',
-        { name, email, password, password_confirmation: confirmPassword },
-        {
-          headers: {
-            'X-XSRF-TOKEN': csrfToken,
-          },
-        },
-      )
-
-      return { data: response.data }
-    } catch (error) {
-      console.error('Error signing up:', error)
-
-      const { code, response } = error as AxiosError<{
-        errors?: Record<string, string[]>
-        message?: string
-      }>
-
-      const errors = response?.data ? response.data.errors : undefined
-      const message = response?.data ? response.data.message : undefined
-
-      return {
-        error: {
-          message,
-          code,
-          errors,
-        },
-      }
+      console.error('Error fetching user:', error);
+      return { error: 'Failed to fetch user. Details: ' + (error as AxiosError).message };
     }
   },
 
   async recoverPassword(email: string) {
     try {
-      const csrfToken = await this.csrfToken()
+      const csrfToken = await this.csrfToken();
 
       const response = await api.post<RecoverResponse>(
         'api/recover',
@@ -126,30 +60,97 @@ export default {
             'X-XSRF-TOKEN': csrfToken,
           },
         },
-      )
-      return { data: response.data }
+      );
+      return { data: response.data };
     } catch (error) {
-      console.error('Error recovering password:', error)
+      console.error('Error recovering password:', error);
 
       const { code, response } = error as AxiosError<{
-        errors?: Record<string, string[]>
-        message?: string
-      }>
+        errors?: Record<string, string[]>;
+        message?: string;
+      }>;
 
-      const errors = response?.data ? response.data.errors : undefined
-      const message = response?.data ? response.data.message : undefined
+      const errors = response?.data ? response.data.errors : undefined;
+      const message = response?.data ? response.data.message : undefined;
 
       return {
         error: {
-          message,
           code,
           errors,
+          message,
         },
-      }
+      };
     }
   },
 
-  async csrfToken() {
-    return await api.get('sanctum/csrf-cookie')
+  async signIn(email: string, password: string) {
+    try {
+      const csrfToken = await this.csrfToken();
+      const response = await api.post<LoginResponse>(
+        'api/login',
+        { email, password },
+        {
+          headers: {
+            'X-XSRF-TOKEN': csrfToken,
+          },
+        },
+      );
+
+      return { data: response.data };
+    } catch (error) {
+      console.error('Error signing in:', error);
+
+      const { code, response } = error as AxiosError<{
+        errors?: Record<string, string[]>;
+        message?: string;
+      }>;
+
+      const errors = response?.data ? response.data.errors : undefined;
+      const message = response?.data ? response.data.message : undefined;
+
+      return {
+        error: {
+          code,
+          errors,
+          message,
+          status: response?.status,
+        },
+      };
+    }
   },
-}
+
+  async signUp(name: string, email: string, password: string, confirmPassword: string) {
+    try {
+      const csrfToken = await this.csrfToken();
+      const response = await api.post<LoginResponse>(
+        'api/register',
+        { email, name, password, password_confirmation: confirmPassword },
+        {
+          headers: {
+            'X-XSRF-TOKEN': csrfToken,
+          },
+        },
+      );
+
+      return { data: response.data };
+    } catch (error) {
+      console.error('Error signing up:', error);
+
+      const { code, response } = error as AxiosError<{
+        errors?: Record<string, string[]>;
+        message?: string;
+      }>;
+
+      const errors = response?.data ? response.data.errors : undefined;
+      const message = response?.data ? response.data.message : undefined;
+
+      return {
+        error: {
+          code,
+          errors,
+          message,
+        },
+      };
+    }
+  },
+};

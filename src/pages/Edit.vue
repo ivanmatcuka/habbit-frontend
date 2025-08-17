@@ -44,76 +44,77 @@
 </template>
 
 <script lang="ts">
-import AuthLayout from '@/AuthLayout.vue'
-import tasksService, { type Task } from '../services/tasks'
+import AuthLayout from '@/AuthLayout.vue';
+
+import tasksService, { type Task } from '../services/tasks';
 
 export const OPTIONS = [
-  { value: 1, text: 1 },
-  { value: 2, text: 2 },
-  { value: 3, text: 3 },
-  { value: 4, text: 4 },
-  { value: 5, text: 5 },
-  { value: 6, text: 6 },
-  { value: 7, text: 7 },
-]
+  { text: 1, value: 1 },
+  { text: 2, value: 2 },
+  { text: 3, value: 3 },
+  { text: 4, value: 4 },
+  { text: 5, value: 5 },
+  { text: 6, value: 6 },
+  { text: 7, value: 7 },
+];
 
 type EditComponentState = {
-  task: Task | null
-  isLoading: boolean
-  options: typeof OPTIONS
-}
+  isLoading: boolean;
+  options: typeof OPTIONS;
+  task: null | Task;
+};
 
 export default {
-  name: 'EditPage',
   components: { AuthLayout },
-
   data(): EditComponentState {
     return {
-      task: null,
       isLoading: false,
       options: OPTIONS,
-    }
-  },
-
-  async mounted() {
-    this.isLoading = true
-
-    const { data, error } = await tasksService.getTask(this.$route.params.id as string)
-
-    this.isLoading = false
-
-    if (error) {
-      console.error('Failed to fetch tasks:', error)
-      return
-    }
-
-    this.task = data ?? null
+      task: null,
+    };
   },
 
   methods: {
     async submit(event: Event) {
-      if (!this.task) return
+      if (!this.task) return;
 
-      event.preventDefault()
+      event.preventDefault();
 
       const fields = {
-        title: this.task.title,
         frequency: this.task.frequency,
-      }
+        title: this.task.title,
+      };
 
-      this.isLoading = true
+      this.isLoading = true;
 
-      const { error } = await tasksService.updateTask(String(this.task.id), fields)
+      const { error } = await tasksService.updateTask(String(this.task.id), fields);
 
       if (error) {
-        console.error('Failed to fetch tasks:', error)
-        return
+        console.error('Failed to fetch tasks:', error);
+        return;
       }
 
       await this.$router.push({
         name: 'habits',
-      })
+      });
     },
   },
-}
+
+  async mounted() {
+    this.isLoading = true;
+
+    const { data, error } = await tasksService.getTask(this.$route.params.id as string);
+
+    this.isLoading = false;
+
+    if (error) {
+      console.error('Failed to fetch tasks:', error);
+      return;
+    }
+
+    this.task = data ?? null;
+  },
+
+  name: 'EditPage',
+};
 </script>

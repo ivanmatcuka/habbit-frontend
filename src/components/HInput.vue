@@ -27,49 +27,49 @@ import type { InputType } from 'bootstrap-vue-next'
 import type { PropType } from 'vue'
 
 export default {
-  name: 'HInput',
   components: {},
-
-  props: {
-    placeholder: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: String as PropType<InputType>,
-      required: true,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    value: {
-      type: String,
-      required: true,
-    },
-    error: {
-      type: Object as PropType<{
-        errors?: Record<string, string[]>
-        message?: string
-        code?: string
-      }>,
-      required: true,
+  computed: {
+    errorMessage(): string | undefined {
+      return this.error?.errors?.[this.name]?.join(', ')
     },
   },
 
   emits: ['update:value'],
 
-  computed: {
-    errorMessage(): string | undefined {
-      return this.error?.errors?.[this.name]?.join(', ')
+  name: 'HInput',
+
+  props: {
+    description: {
+      required: true,
+      type: String,
+    },
+    error: {
+      required: true,
+      type: Object as PropType<{
+        code?: string
+        errors?: Record<string, string[]>
+        message?: string
+      }>,
+    },
+    label: {
+      required: true,
+      type: String,
+    },
+    name: {
+      required: true,
+      type: String,
+    },
+    placeholder: {
+      required: true,
+      type: String,
+    },
+    type: {
+      required: true,
+      type: String as PropType<InputType>,
+    },
+    value: {
+      required: true,
+      type: String,
     },
   },
 }

@@ -15,8 +15,8 @@
 import RowItem from './RowItem.vue'
 
 export default {
-  name: 'TodoItemPlaceholder',
   components: { RowItem },
+  name: 'TodoItemPlaceholder',
 }
 </script>
 

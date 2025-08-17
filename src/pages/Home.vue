@@ -41,29 +41,18 @@
 <script lang="ts">
 import moment from 'moment'
 
-import tasksService, { type Task } from '@/services/tasks'
 import AuthLayout from '@/AuthLayout.vue'
+import tasksService, { type Task } from '@/services/tasks'
 
 type HomePageState = {
-  tasks: Task[]
-  isLoading: boolean
-  isCompletingId: number | null
   date: ReturnType<typeof moment>
+  isCompletingId: null | number
+  isLoading: boolean
+  tasks: Task[]
 }
 
 export default {
-  name: 'HomePage',
   components: { AuthLayout },
-
-  data(): HomePageState {
-    return {
-      tasks: [],
-      isLoading: false,
-      isCompletingId: null,
-      date: moment(),
-    }
-  },
-
   computed: {
     completedTasks() {
       return this.tasks.filter((task) =>
@@ -80,8 +69,13 @@ export default {
     },
   },
 
-  async mounted() {
-    this.fetchTasks()
+  data(): HomePageState {
+    return {
+      date: moment(),
+      isCompletingId: null,
+      isLoading: false,
+      tasks: [],
+    }
   },
 
   methods: {
@@ -98,6 +92,20 @@ export default {
       }
 
       this.fetchTasks()
+    },
+
+    async fetchTasks() {
+      this.isLoading = this.tasks.length === 0
+
+      const { data, error } = await tasksService.getTasks()
+
+      if (error) {
+        console.error('Failed to fetch tasks:', error)
+      }
+
+      this.tasks = data ?? []
+      this.isLoading = false
+      this.isCompletingId = null
     },
 
     async uncompleteTask(task: Task) {
@@ -118,21 +126,13 @@ export default {
         this.fetchTasks()
       }
     },
-
-    async fetchTasks() {
-      this.isLoading = this.tasks.length === 0
-
-      const { data, error } = await tasksService.getTasks()
-
-      if (error) {
-        console.error('Failed to fetch tasks:', error)
-      }
-
-      this.tasks = data ?? []
-      this.isLoading = false
-      this.isCompletingId = null
-    },
   },
+
+  async mounted() {
+    this.fetchTasks()
+  },
+
+  name: 'HomePage',
 }
 </script>
 

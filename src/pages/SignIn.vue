@@ -52,37 +52,35 @@
 <script lang="ts">
 import { mapStores } from 'pinia'
 
-import UnauthLayout from '@/UnauthLayout.vue'
 import userService from '@/services/user'
 import { useUserStore } from '@/stores/user'
+import UnauthLayout from '@/UnauthLayout.vue'
 
 type SignInPageState = {
-  isLoading: boolean
+  email: string
   error: {
+    code?: string
     errors?: Record<string, string[]>
     message?: string
-    code?: string
     status?: number
   }
-  email: string
+  isLoading: boolean
   password: string
 }
 
 export default {
-  name: 'SignInPage',
   components: { UnauthLayout },
+  computed: {
+    ...mapStores(useUserStore),
+  },
 
   data(): SignInPageState {
     return {
-      isLoading: false,
       email: '',
-      password: '',
       error: {},
+      isLoading: false,
+      password: '',
     }
-  },
-
-  computed: {
-    ...mapStores(useUserStore),
   },
 
   methods: {
@@ -103,5 +101,7 @@ export default {
       }
     },
   },
+
+  name: 'SignInPage',
 }
 </script>

@@ -11,15 +11,9 @@ import { useUserStore } from '@/stores/user'
 import UnauthLayout from '@/UnauthLayout.vue'
 
 export default {
-  name: 'SignOutPage',
   components: { UnauthLayout },
-
   computed: {
     ...mapStores(useUserStore),
-  },
-
-  mounted() {
-    this.signOut()
   },
 
   methods: {
@@ -28,5 +22,11 @@ export default {
       this.$router.push({ name: 'signin' })
     },
   },
+
+  mounted() {
+    this.signOut()
+  },
+
+  name: 'SignOutPage',
 }
 </script>

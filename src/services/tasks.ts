@@ -1,32 +1,33 @@
 import axios from 'axios'
-import api from '@/utils/api'
+
 import localStorageService from '@/services/localStorage'
+import api from '@/utils/api'
 
 const API_URL = import.meta.env.VITE_API_URL
 
 export interface Completion {
-  id: number
-  task_id: number
   completed_at: string // ISO Date string (YYYY-MM-DD)
   created_at: string // ISO DateTime string
+  id: number
+  task_id: number
   updated_at: string // ISO DateTime string
 }
 
 export interface Task {
+  completions: Completion[]
+  created_at: string // ISO DateTime string
+  frequency: number
   id: number
   title: string
-  frequency: number
-  created_at: string // ISO DateTime string
   updated_at: string // ISO DateTime string
-  completions: Completion[]
 }
 
 export default {
-  async getTasks() {
+  async completeTask(id: string, data: unknown) {
     const accessToken = localStorageService.getAccessToken()
 
     try {
-      const response = await api.get<Task[]>('api/tasks', {
+      const response = await axios.post(`${API_URL}/api/complete/${id}`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -34,16 +35,16 @@ export default {
 
       return { data: response.data }
     } catch (error) {
-      console.error('Failed to fetch tasks:', error)
+      console.error('Failed to complete task:', error)
       return { error }
     }
   },
 
-  async getTask(id: string) {
+  async createTask(data: unknown) {
     const accessToken = localStorageService.getAccessToken()
 
     try {
-      const response = await api.get<Task>(`api/tasks/${id}`, {
+      const response = await axios.post(`${API_URL}/api/tasks`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -51,7 +52,7 @@ export default {
 
       return { data: response.data }
     } catch (error) {
-      console.error('Failed to get task:', error)
+      console.error('Failed to create task:', error)
       return { error }
     }
   },
@@ -73,11 +74,11 @@ export default {
     }
   },
 
-  async updateTask(id: string, data: unknown) {
+  async getTask(id: string) {
     const accessToken = localStorageService.getAccessToken()
 
     try {
-      const response = await axios.patch(`${API_URL}/api/tasks/${id}`, data, {
+      const response = await api.get<Task>(`api/tasks/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -85,16 +86,16 @@ export default {
 
       return { data: response.data }
     } catch (error) {
-      console.error('Failed to update task:', error)
+      console.error('Failed to get task:', error)
       return { error }
     }
   },
 
-  async completeTask(id: string, data: unknown) {
+  async getTasks() {
     const accessToken = localStorageService.getAccessToken()
 
     try {
-      const response = await axios.post(`${API_URL}/api/complete/${id}`, data, {
+      const response = await api.get<Task[]>('api/tasks', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -102,7 +103,7 @@ export default {
 
       return { data: response.data }
     } catch (error) {
-      console.error('Failed to complete task:', error)
+      console.error('Failed to fetch tasks:', error)
       return { error }
     }
   },
@@ -124,11 +125,11 @@ export default {
     }
   },
 
-  async createTask(data: unknown) {
+  async updateTask(id: string, data: unknown) {
     const accessToken = localStorageService.getAccessToken()
 
     try {
-      const response = await axios.post(`${API_URL}/api/tasks`, data, {
+      const response = await axios.patch(`${API_URL}/api/tasks/${id}`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -136,7 +137,7 @@ export default {
 
       return { data: response.data }
     } catch (error) {
-      console.error('Failed to create task:', error)
+      console.error('Failed to update task:', error)
       return { error }
     }
   },
