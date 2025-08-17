@@ -3,10 +3,10 @@
 </template>
 
 <script lang="ts">
-import { mapStores } from 'pinia'
-import { defineComponent } from 'vue'
+import { mapStores } from 'pinia';
+import { defineComponent } from 'vue';
 
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user';
 
 export default defineComponent({
   components: {},
@@ -15,16 +15,16 @@ export default defineComponent({
   },
   methods: {
     isActive(name: string) {
-      return this.$route.name === name
+      return this.$route.name === name;
     },
   },
 
   mounted() {
-    console.log('App mounted', this.userStore.isLoggedIn)
+    console.log('App mounted', this.userStore.isLoggedIn);
   },
 
   name: 'App',
-})
+});
 </script>
 
 <style lang="scss">

@@ -41,9 +41,9 @@
 </template>
 
 <script lang="ts">
-import AuthLayout from '@/AuthLayout.vue'
+import AuthLayout from '@/AuthLayout.vue';
 
-import tasksService from '../services/tasks'
+import tasksService from '../services/tasks';
 
 export const OPTIONS = [
   { text: 1, value: 1 },
@@ -53,14 +53,14 @@ export const OPTIONS = [
   { text: 5, value: 5 },
   { text: 6, value: 6 },
   { text: 7, value: 7 },
-]
+];
 
 type AddComponentState = {
-  frequency: number
-  isLoading: boolean
-  options: typeof OPTIONS
-  title: string
-}
+  frequency: number;
+  isLoading: boolean;
+  options: typeof OPTIONS;
+  title: string;
+};
 
 export default {
   components: { AuthLayout },
@@ -70,32 +70,32 @@ export default {
       isLoading: false,
       options: OPTIONS,
       title: '',
-    }
+    };
   },
 
   methods: {
     async submit(event: Event) {
-      event.preventDefault()
+      event.preventDefault();
 
       const data = {
         frequency: this.frequency,
         title: this.title,
-      }
+      };
 
-      this.isLoading = true
+      this.isLoading = true;
 
-      const { error } = await tasksService.createTask(data)
+      const { error } = await tasksService.createTask(data);
 
       if (!error) {
         await this.$router.push({
           name: 'habits',
-        })
+        });
       }
 
-      this.isLoading = false
+      this.isLoading = false;
     },
   },
 
   name: 'AddPage',
-}
+};
 </script>

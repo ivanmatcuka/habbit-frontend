@@ -22,11 +22,11 @@
 </template>
 
 <script lang="ts">
-import EditIcon from '@/icons/EditIcon.vue'
-import TrashIcon from '@/icons/TrashIcon.vue'
+import EditIcon from '@/icons/EditIcon.vue';
+import TrashIcon from '@/icons/TrashIcon.vue';
 
 export default {
   components: { EditIcon, TrashIcon },
   name: 'HabitItemPlaceholder',
-}
+};
 </script>

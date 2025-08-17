@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import AuthLayout from '@/AuthLayout.vue'
-import tasksService, { type Task } from '@/services/tasks'
+import AuthLayout from '@/AuthLayout.vue';
+import tasksService, { type Task } from '@/services/tasks';
 
 const OPTIONS = [
   { text: 1, value: 1 },
@@ -26,17 +26,17 @@ const OPTIONS = [
   { text: 5, value: 5 },
   { text: 6, value: 6 },
   { text: 7, value: 7 },
-]
+];
 
 type HabitsPageState = {
-  frequency: null | number
-  isLoading: boolean
-  modal: boolean
-  options: typeof OPTIONS
-  selectedTaskId: null | number
-  tasks: Task[]
-  title: string
-}
+  frequency: null | number;
+  isLoading: boolean;
+  modal: boolean;
+  options: typeof OPTIONS;
+  selectedTaskId: null | number;
+  tasks: Task[];
+  title: string;
+};
 
 export default {
   components: { AuthLayout },
@@ -49,30 +49,30 @@ export default {
       selectedTaskId: null,
       tasks: [],
       title: '',
-    }
+    };
   },
 
   methods: {
     confirmDelete(selectedTaskId?: number) {
-      this.tasks = this.tasks.filter((task) => task.id !== selectedTaskId)
+      this.tasks = this.tasks.filter((task) => task.id !== selectedTaskId);
     },
   },
 
   async mounted() {
-    this.isLoading = true
+    this.isLoading = true;
 
-    const { data, error } = await tasksService.getTasks()
+    const { data, error } = await tasksService.getTasks();
 
     if (error) {
-      console.error('Failed to fetch tasks:', error)
+      console.error('Failed to fetch tasks:', error);
     }
 
-    this.tasks = data ?? []
-    this.isLoading = false
+    this.tasks = data ?? [];
+    this.isLoading = false;
   },
 
   name: 'HabitsPage',
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -14,13 +14,13 @@
 </template>
 
 <script lang="ts">
-import { type PropType } from 'vue'
+import { type PropType } from 'vue';
 
-import CheckedCirclieIcon from '@/icons/CheckedCirclieIcon.vue'
-import CirclieIcon from '@/icons/CirclieIcon.vue'
-import { type Task } from '@/services/tasks'
+import CheckedCirclieIcon from '@/icons/CheckedCirclieIcon.vue';
+import CirclieIcon from '@/icons/CirclieIcon.vue';
+import { type Task } from '@/services/tasks';
 
-import RowItem from './RowItem.vue'
+import RowItem from './RowItem.vue';
 
 export default {
   components: { CheckedCirclieIcon, CirclieIcon, RowItem },
@@ -32,7 +32,7 @@ export default {
     onDo: Function as PropType<(payload: MouseEvent) => void>,
     task: Object as PropType<Task>,
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

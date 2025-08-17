@@ -12,12 +12,12 @@
 </template>
 
 <script lang="ts">
-import RowItem from './RowItem.vue'
+import RowItem from './RowItem.vue';
 
 export default {
   components: { RowItem },
   name: 'TodoItemPlaceholder',
-}
+};
 </script>
 
 <style scoped lang="scss">

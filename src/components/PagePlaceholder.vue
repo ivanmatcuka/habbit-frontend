@@ -25,10 +25,10 @@
 </template>
 
 <script lang="ts">
-import AuthLayout from '@/AuthLayout.vue'
+import AuthLayout from '@/AuthLayout.vue';
 
 export default {
   components: { AuthLayout },
   name: 'PagePlaceholder',
-}
+};
 </script>

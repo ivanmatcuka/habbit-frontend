@@ -17,18 +17,18 @@
 </template>
 
 <script lang="ts">
-import UserIcon from '@/icons/UserIcon.vue'
+import UserIcon from '@/icons/UserIcon.vue';
 
 export default {
   components: { UserIcon },
   methods: {
     isActive(name: string) {
-      return this.$route.name === name
+      return this.$route.name === name;
     },
   },
 
   name: 'AuthLayout',
-}
+};
 </script>
 
 <style scoped>

@@ -64,24 +64,24 @@
 </template>
 
 <script lang="ts">
-import { mapStores } from 'pinia'
+import { mapStores } from 'pinia';
 
-import userService from '@/services/user'
-import { useUserStore } from '@/stores/user'
-import UnauthLayout from '@/UnauthLayout.vue'
+import userService from '@/services/user';
+import { useUserStore } from '@/stores/user';
+import UnauthLayout from '@/UnauthLayout.vue';
 
 type SignUpPageState = {
-  confirmPassword: string
-  email: string
+  confirmPassword: string;
+  email: string;
   error: {
-    code?: string
-    errors?: Record<string, string[]>
-    message?: string
-  }
-  isLoading: boolean
-  name: string
-  password: string
-}
+    code?: string;
+    errors?: Record<string, string[]>;
+    message?: string;
+  };
+  isLoading: boolean;
+  name: string;
+  password: string;
+};
 
 export default {
   components: { UnauthLayout },
@@ -89,10 +89,10 @@ export default {
     ...mapStores(useUserStore),
     confirmPasswordError() {
       if (this.confirmPassword !== this.password) {
-        return { errors: { confirm_password: ['Passwords do not match'] } }
+        return { errors: { confirm_password: ['Passwords do not match'] } };
       }
 
-      return {}
+      return {};
     },
   },
 
@@ -104,28 +104,28 @@ export default {
       isLoading: false,
       name: '',
       password: '',
-    }
+    };
   },
 
   methods: {
     async submit(event: Event) {
-      event.preventDefault()
+      event.preventDefault();
 
-      this.isLoading = true
+      this.isLoading = true;
 
-      const { confirmPassword, email, name, password } = this
-      const { data, error } = await userService.signUp(name, email, password, confirmPassword)
+      const { confirmPassword, email, name, password } = this;
+      const { data, error } = await userService.signUp(name, email, password, confirmPassword);
 
-      this.error = error ?? {}
-      this.isLoading = false
+      this.error = error ?? {};
+      this.isLoading = false;
 
       if (data?.user) {
-        this.userStore.setUser(data.user, data.access_token)
-        this.$router.push({ name: 'home' })
+        this.userStore.setUser(data.user, data.access_token);
+        this.$router.push({ name: 'home' });
       }
     },
   },
 
   name: 'SignUpPage',
-}
+};
 </script>

@@ -33,19 +33,19 @@
 </template>
 
 <script lang="ts">
-import userService from '@/services/user'
-import UnauthLayout from '@/UnauthLayout.vue'
+import userService from '@/services/user';
+import UnauthLayout from '@/UnauthLayout.vue';
 
 type RecoverPasswordPageState = {
-  email: string
+  email: string;
   error: {
-    code?: string
-    errors?: Record<string, string[]>
-    message?: string
-  }
-  isLoading: boolean
-  isSent: boolean
-}
+    code?: string;
+    errors?: Record<string, string[]>;
+    message?: string;
+  };
+  isLoading: boolean;
+  isSent: boolean;
+};
 
 export default {
   components: { UnauthLayout },
@@ -55,25 +55,25 @@ export default {
       error: {},
       isLoading: false,
       isSent: false,
-    }
+    };
   },
 
   methods: {
     async submit(event: Event) {
-      event.preventDefault()
-      this.isLoading = true
+      event.preventDefault();
+      this.isLoading = true;
 
-      const { error } = (await userService.recoverPassword?.(this.email)) ?? {}
+      const { error } = (await userService.recoverPassword?.(this.email)) ?? {};
 
-      this.error = error ?? {}
-      this.isLoading = false
+      this.error = error ?? {};
+      this.isLoading = false;
 
-      if (error) return
+      if (error) return;
 
-      this.isSent = true
+      this.isSent = true;
     },
   },
 
   name: 'RecoverPasswordPage',
-}
+};
 </script>

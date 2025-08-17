@@ -23,14 +23,14 @@
 </template>
 
 <script lang="ts">
-import type { InputType } from 'bootstrap-vue-next'
-import type { PropType } from 'vue'
+import type { InputType } from 'bootstrap-vue-next';
+import type { PropType } from 'vue';
 
 export default {
   components: {},
   computed: {
     errorMessage(): string | undefined {
-      return this.error?.errors?.[this.name]?.join(', ')
+      return this.error?.errors?.[this.name]?.join(', ');
     },
   },
 
@@ -46,9 +46,9 @@ export default {
     error: {
       required: true,
       type: Object as PropType<{
-        code?: string
-        errors?: Record<string, string[]>
-        message?: string
+        code?: string;
+        errors?: Record<string, string[]>;
+        message?: string;
       }>,
     },
     label: {
@@ -72,5 +72,5 @@ export default {
       type: String,
     },
   },
-}
+};
 </script>

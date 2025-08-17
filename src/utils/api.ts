@@ -1,11 +1,11 @@
-import axios, { type AxiosResponse } from 'axios'
+import axios, { type AxiosResponse } from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL;
 
 const DEFAULT_HEADERS = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
-}
+};
 
 export default {
   delete<T = unknown>(uri: string, options?: Record<string, unknown>): Promise<AxiosResponse<T>> {
@@ -14,7 +14,7 @@ export default {
         ...DEFAULT_HEADERS,
       },
       ...options,
-    })
+    });
   },
 
   get<T = unknown>(uri: string, options?: Record<string, unknown>): Promise<AxiosResponse<T>> {
@@ -23,7 +23,7 @@ export default {
         ...DEFAULT_HEADERS,
       },
       ...options,
-    })
+    });
   },
 
   post<T = unknown>(
@@ -36,6 +36,6 @@ export default {
         ...DEFAULT_HEADERS,
       },
       ...options,
-    })
+    });
   },
-}
+};

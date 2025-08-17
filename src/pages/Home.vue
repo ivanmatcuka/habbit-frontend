@@ -39,17 +39,17 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment'
+import moment from 'moment';
 
-import AuthLayout from '@/AuthLayout.vue'
-import tasksService, { type Task } from '@/services/tasks'
+import AuthLayout from '@/AuthLayout.vue';
+import tasksService, { type Task } from '@/services/tasks';
 
 type HomePageState = {
-  date: ReturnType<typeof moment>
-  isCompletingId: null | number
-  isLoading: boolean
-  tasks: Task[]
-}
+  date: ReturnType<typeof moment>;
+  isCompletingId: null | number;
+  isLoading: boolean;
+  tasks: Task[];
+};
 
 export default {
   components: { AuthLayout },
@@ -59,13 +59,13 @@ export default {
         task.completions.some((completion) =>
           moment(completion.completed_at).isSame(this.date, 'day'),
         ),
-      )
+      );
     },
 
     uncompletedTasks() {
-      const completedIds = this.completedTasks.map((task) => task.id)
+      const completedIds = this.completedTasks.map((task) => task.id);
 
-      return this.tasks.filter((task) => !completedIds.includes(task.id))
+      return this.tasks.filter((task) => !completedIds.includes(task.id));
     },
   },
 
@@ -75,65 +75,65 @@ export default {
       isCompletingId: null,
       isLoading: false,
       tasks: [],
-    }
+    };
   },
 
   methods: {
     async completeTask(id: number) {
-      this.isCompletingId = id
+      this.isCompletingId = id;
 
       const { error } = await tasksService.completeTask(String(id), {
         completed_at: this.date.format('YYYY-MM-DD HH:mm:ss'),
-      })
+      });
 
       if (error) {
-        this.isCompletingId = null
-        return
+        this.isCompletingId = null;
+        return;
       }
 
-      this.fetchTasks()
+      this.fetchTasks();
     },
 
     async fetchTasks() {
-      this.isLoading = this.tasks.length === 0
+      this.isLoading = this.tasks.length === 0;
 
-      const { data, error } = await tasksService.getTasks()
+      const { data, error } = await tasksService.getTasks();
 
       if (error) {
-        console.error('Failed to fetch tasks:', error)
+        console.error('Failed to fetch tasks:', error);
       }
 
-      this.tasks = data ?? []
-      this.isLoading = false
-      this.isCompletingId = null
+      this.tasks = data ?? [];
+      this.isLoading = false;
+      this.isCompletingId = null;
     },
 
     async uncompleteTask(task: Task) {
-      this.isCompletingId = task.id
+      this.isCompletingId = task.id;
 
       const completion = task.completions.find(({ completed_at }) =>
         moment(completed_at).isSame(this.date, 'day'),
-      )
+      );
 
       if (completion) {
-        const { error } = await tasksService.uncompleteTask(String(completion.id))
+        const { error } = await tasksService.uncompleteTask(String(completion.id));
 
         if (error) {
-          this.isCompletingId = null
-          return
+          this.isCompletingId = null;
+          return;
         }
 
-        this.fetchTasks()
+        this.fetchTasks();
       }
     },
   },
 
   async mounted() {
-    this.fetchTasks()
+    this.fetchTasks();
   },
 
   name: 'HomePage',
-}
+};
 </script>
 
 <style lang="scss" scoped>

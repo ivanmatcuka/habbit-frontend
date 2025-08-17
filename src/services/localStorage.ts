@@ -1,15 +1,15 @@
-const AUTH_KEY = 'auth_details'
+const AUTH_KEY = 'auth_details';
 
 export default {
   getAccessToken(): null | string {
-    return localStorage.getItem(AUTH_KEY)
+    return localStorage.getItem(AUTH_KEY);
   },
 
   removeAccessToken() {
-    localStorage.removeItem(AUTH_KEY)
+    localStorage.removeItem(AUTH_KEY);
   },
 
   setAccessToken(accessToken: string) {
-    localStorage.setItem(AUTH_KEY, accessToken)
+    localStorage.setItem(AUTH_KEY, accessToken);
   },
-}
+};

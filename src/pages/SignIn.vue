@@ -50,23 +50,23 @@
 </template>
 
 <script lang="ts">
-import { mapStores } from 'pinia'
+import { mapStores } from 'pinia';
 
-import userService from '@/services/user'
-import { useUserStore } from '@/stores/user'
-import UnauthLayout from '@/UnauthLayout.vue'
+import userService from '@/services/user';
+import { useUserStore } from '@/stores/user';
+import UnauthLayout from '@/UnauthLayout.vue';
 
 type SignInPageState = {
-  email: string
+  email: string;
   error: {
-    code?: string
-    errors?: Record<string, string[]>
-    message?: string
-    status?: number
-  }
-  isLoading: boolean
-  password: string
-}
+    code?: string;
+    errors?: Record<string, string[]>;
+    message?: string;
+    status?: number;
+  };
+  isLoading: boolean;
+  password: string;
+};
 
 export default {
   components: { UnauthLayout },
@@ -80,28 +80,28 @@ export default {
       error: {},
       isLoading: false,
       password: '',
-    }
+    };
   },
 
   methods: {
     async submit(event: Event) {
-      event.preventDefault()
+      event.preventDefault();
 
-      this.isLoading = true
+      this.isLoading = true;
 
-      const { email, password } = this
-      const { data, error } = await userService.signIn(email, password)
+      const { email, password } = this;
+      const { data, error } = await userService.signIn(email, password);
 
-      this.error = error ?? {}
-      this.isLoading = false
+      this.error = error ?? {};
+      this.isLoading = false;
 
       if (data?.user) {
-        this.userStore.setUser(data.user, data.access_token)
-        this.$router.push({ name: 'home' })
+        this.userStore.setUser(data.user, data.access_token);
+        this.$router.push({ name: 'home' });
       }
     },
   },
 
   name: 'SignInPage',
-}
+};
 </script>

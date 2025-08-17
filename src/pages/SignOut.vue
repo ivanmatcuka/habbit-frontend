@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-import { mapStores } from 'pinia'
+import { mapStores } from 'pinia';
 
-import { useUserStore } from '@/stores/user'
-import UnauthLayout from '@/UnauthLayout.vue'
+import { useUserStore } from '@/stores/user';
+import UnauthLayout from '@/UnauthLayout.vue';
 
 export default {
   components: { UnauthLayout },
@@ -18,15 +18,15 @@ export default {
 
   methods: {
     async signOut() {
-      this.userStore.clearUser()
-      this.$router.push({ name: 'signin' })
+      this.userStore.clearUser();
+      this.$router.push({ name: 'signin' });
     },
   },
 
   mounted() {
-    this.signOut()
+    this.signOut();
   },
 
   name: 'SignOutPage',
-}
+};
 </script>
