@@ -73,6 +73,7 @@ export default {
           message,
           code,
           errors,
+          status: response?.status,
         },
       }
     }

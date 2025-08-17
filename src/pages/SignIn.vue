@@ -27,9 +27,14 @@
         @update:value="password = $event"
       />
 
-      <b-form-text v-if="error?.message && !error?.errors" text-variant="danger">
-        Error occurred. Please try again later
-      </b-form-text>
+      <div v-if="error?.message && !error?.errors">
+        <b-form-text v-if="error?.status === 401" text-variant="danger"
+          >{{ error.message }}
+        </b-form-text>
+        <b-form-text v-else text-variant="danger"
+          >Error occurred. Please try again later
+        </b-form-text>
+      </div>
 
       <div class="d-flex gap-2 flex-wrap">
         <b-button :loading="isLoading" type="submit" variant="dark" loading-fill>Sign In</b-button>
@@ -57,6 +62,7 @@ type SignInPageState = {
     errors?: Record<string, string[]>
     message?: string
     code?: string
+    status?: number
   }
   email: string
   password: string
