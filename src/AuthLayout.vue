@@ -1,5 +1,5 @@
 <template>
-  <main id="app" class="my-8 text-white m-auto">
+  <main id="app" class="my-8 text-white m-auto px-2">
     <nav class="d-flex gap-2 align-items-center justify-content-between mb-8">
       <div class="d-flex gap-2">
         <b-button to="/" variant="outline-light" :active="isActive('home')">Dashboard</b-button>
