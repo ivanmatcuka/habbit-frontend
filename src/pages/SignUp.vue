@@ -1,6 +1,6 @@
 <template>
   <unauth-layout>
-    <b-form class="d-flex flex-column mt-5 gap-4" @submit="submit">
+    <b-form class="d-flex flex-column my-5 gap-4" @submit="submit">
       <h1 class="text-white">Sign Up</h1>
 
       <!-- Name field -->

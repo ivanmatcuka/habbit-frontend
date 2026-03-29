@@ -27,7 +27,22 @@
       >
         <b-form-select
           v-model="frequency"
-          :options="options"
+          :options="FREQUENCY_OPTIONS"
+          required
+          class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
+        />
+      </b-form-group>
+
+      <!-- Type -->
+      <b-form-group
+        label-size="lg"
+        label-class="mb-1 p-0"
+        label="Type"
+        description="Do you want to do this or avoid doing this?"
+      >
+        <b-form-select
+          v-model="type"
+          :options="TYPE_OPTIONS"
           required
           class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
         />
@@ -43,9 +58,9 @@
 <script lang="ts">
 import AuthLayout from '@/AuthLayout.vue';
 
-import tasksService from '../services/tasks';
+import tasksService, { type Task } from '../services/tasks';
 
-export const OPTIONS = [
+export const FREQUENCY_OPTIONS = [
   { text: 1, value: 1 },
   { text: 2, value: 2 },
   { text: 3, value: 3 },
@@ -55,21 +70,30 @@ export const OPTIONS = [
   { text: 7, value: 7 },
 ];
 
+export const TYPE_OPTIONS = ['avoid', 'do'];
+
 type AddComponentState = {
   frequency: number;
+  // constant
+  FREQUENCY_OPTIONS: typeof FREQUENCY_OPTIONS;
   isLoading: boolean;
-  options: typeof OPTIONS;
   title: string;
+  type: Task['type'];
+  // constant
+  TYPE_OPTIONS: typeof TYPE_OPTIONS;
 };
 
 export default {
   components: { AuthLayout },
+
   data(): AddComponentState {
     return {
       frequency: 1,
+      FREQUENCY_OPTIONS,
       isLoading: false,
-      options: OPTIONS,
       title: '',
+      type: 'avoid',
+      TYPE_OPTIONS,
     };
   },
 
@@ -80,6 +104,7 @@ export default {
       const data = {
         frequency: this.frequency,
         title: this.title,
+        type: this.type,
       };
 
       this.isLoading = true;

@@ -28,7 +28,22 @@
       >
         <b-form-select
           v-model="task.frequency"
-          :options="options"
+          :options="FREQUENCY_OPTIONS"
+          required
+          class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
+        />
+      </b-form-group>
+
+      <!-- Type -->
+      <b-form-group
+        label-size="lg"
+        label-class="mb-1 p-0"
+        label="Frequency"
+        description="How many times per week do you want to do this?"
+      >
+        <b-form-select
+          v-model="task.type"
+          :options="TYPE_OPTIONS"
           required
           class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
         />
@@ -47,30 +62,25 @@
 import AuthLayout from '@/AuthLayout.vue';
 
 import tasksService, { type Task } from '../services/tasks';
-
-export const OPTIONS = [
-  { text: 1, value: 1 },
-  { text: 2, value: 2 },
-  { text: 3, value: 3 },
-  { text: 4, value: 4 },
-  { text: 5, value: 5 },
-  { text: 6, value: 6 },
-  { text: 7, value: 7 },
-];
+import { FREQUENCY_OPTIONS, TYPE_OPTIONS } from './Add.vue';
 
 type EditComponentState = {
+  // constant
+  FREQUENCY_OPTIONS: typeof FREQUENCY_OPTIONS;
   isLoading: boolean;
-  options: typeof OPTIONS;
   task: null | Task;
+  // constant
+  TYPE_OPTIONS: typeof TYPE_OPTIONS;
 };
 
 export default {
   components: { AuthLayout },
   data(): EditComponentState {
     return {
+      FREQUENCY_OPTIONS,
       isLoading: false,
-      options: OPTIONS,
       task: null,
+      TYPE_OPTIONS,
     };
   },
 
@@ -83,6 +93,7 @@ export default {
       const fields = {
         frequency: this.task.frequency,
         title: this.task.title,
+        type: this.task.type,
       };
 
       this.isLoading = true;

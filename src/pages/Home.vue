@@ -11,7 +11,7 @@
 
         <div v-else class="d-flex flex-column gap-8">
           <div v-if="uncompletedTasks.length" class="d-flex flex-column gap-2">
-            <h2 class="text-white">To-Do</h2>
+            <h2 class="text-white">To Do</h2>
             <todo-item
               v-for="task in uncompletedTasks"
               :key="task.id"
@@ -22,9 +22,31 @@
             />
           </div>
           <div v-if="completedTasks.length" class="d-flex flex-column gap-2">
-            <h2 class="text-white">Done</h2>
+            <h2 class="text-white">Done!</h2>
             <todo-item
               v-for="task in completedTasks"
+              :key="task.id"
+              :done="true"
+              :task="task"
+              :on-do="() => uncompleteTask(task)"
+              :is-completing="isCompletingId === task.id"
+            />
+          </div>
+          <div v-if="uncavedTasks.length" class="d-flex flex-column gap-2">
+            <h2 class="text-white">To Avoid</h2>
+            <todo-item
+              v-for="task in uncavedTasks"
+              :key="task.id"
+              :done="false"
+              :task="task"
+              :on-do="() => completeTask(task.id)"
+              :is-completing="isCompletingId === task.id"
+            />
+          </div>
+          <div v-if="cavedTasks.length" class="d-flex flex-column gap-2">
+            <h2 class="text-white">Caved</h2>
+            <todo-item
+              v-for="task in cavedTasks"
               :key="task.id"
               :done="true"
               :task="task"
@@ -54,18 +76,36 @@ type HomePageState = {
 export default {
   components: { AuthLayout },
   computed: {
-    completedTasks() {
-      return this.tasks.filter((task) =>
+    cavedTasks() {
+      const toAvoidTasks = this.tasks.filter((task) => task.type === 'avoid');
+      return toAvoidTasks.filter((task) =>
         task.completions.some((completion) =>
           moment(completion.completed_at).isSame(this.date, 'day'),
         ),
       );
     },
 
+    completedTasks() {
+      const todoTasks = this.tasks.filter((task) => task.type === 'do');
+      return todoTasks.filter((task) =>
+        task.completions.some((completion) =>
+          moment(completion.completed_at).isSame(this.date, 'day'),
+        ),
+      );
+    },
+
+    uncavedTasks() {
+      const cavedTasks = this.cavedTasks.map((task) => task.id);
+      const toAvoidTasks = this.tasks.filter((task) => task.type === 'avoid');
+
+      return toAvoidTasks.filter((task) => !cavedTasks.includes(task.id));
+    },
+
     uncompletedTasks() {
       const completedIds = this.completedTasks.map((task) => task.id);
+      const todoTasks = this.tasks.filter((task) => task.type === 'do');
 
-      return this.tasks.filter((task) => !completedIds.includes(task.id));
+      return todoTasks.filter((task) => !completedIds.includes(task.id));
     },
   },
 

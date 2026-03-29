@@ -19,8 +19,11 @@ export interface Task {
   frequency: number;
   id: number;
   title: string;
+  type: Types;
   updated_at: string; // ISO DateTime string
 }
+
+type Types = 'avoid' | 'do';
 
 export default {
   async completeTask(id: string, data: unknown) {
