@@ -38,8 +38,8 @@
       <b-form-group
         label-size="lg"
         label-class="mb-1 p-0"
-        label="Frequency"
-        description="How many times per week do you want to do this?"
+        label="Type"
+        description="Do you want to do this or avoid doing this?"
       >
         <b-form-select
           v-model="task.type"
