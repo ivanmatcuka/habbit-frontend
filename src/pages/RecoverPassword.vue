@@ -63,7 +63,7 @@ export default {
       event.preventDefault();
       this.isLoading = true;
 
-      const { error } = (await userService.recoverPassword?.(this.email)) ?? {};
+      const { error } = await userService.recoverPassword(this.email);
 
       this.error = error ?? {};
       this.isLoading = false;

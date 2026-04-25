@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import EditIcon from '@/icons/EditIcon.vue';
-import TrashIcon from '@/icons/TrashIcon.vue';
+import EditIcon from '~shared/icons/EditIcon.vue';
+import TrashIcon from '~shared/icons/TrashIcon.vue';
 
 export default {
   components: { EditIcon, TrashIcon },

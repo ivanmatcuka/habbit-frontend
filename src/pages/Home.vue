@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <auth-layout>
     <div class="d-flex flex-column gap-6">
@@ -61,10 +62,11 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment';
+import moment, { type MomentInput } from 'moment';
+import { defineComponent } from 'vue';
+import tasksService, { type Task } from '~shared/services/tasks';
 
 import AuthLayout from '@/AuthLayout.vue';
-import tasksService, { type Task } from '@/services/tasks';
 
 type HomePageState = {
   date: ReturnType<typeof moment>;
@@ -73,14 +75,14 @@ type HomePageState = {
   tasks: Task[];
 };
 
-export default {
+export default defineComponent({
   components: { AuthLayout },
   computed: {
     cavedTasks() {
       const toAvoidTasks = this.tasks.filter((task) => task.type === 'avoid');
       return toAvoidTasks.filter((task) =>
         task.completions.some((completion) =>
-          moment(completion.completed_at).isSame(this.date, 'day'),
+          moment(completion.completed_at).isSame(this.date as MomentInput, 'day'),
         ),
       );
     },
@@ -89,7 +91,7 @@ export default {
       const todoTasks = this.tasks.filter((task) => task.type === 'do');
       return todoTasks.filter((task) =>
         task.completions.some((completion) =>
-          moment(completion.completed_at).isSame(this.date, 'day'),
+          moment(completion.completed_at).isSame(this.date as MomentInput, 'day'),
         ),
       );
     },
@@ -152,7 +154,7 @@ export default {
       this.isCompletingId = task.id;
 
       const completion = task.completions.find(({ completed_at }) =>
-        moment(completed_at).isSame(this.date, 'day'),
+        moment(completed_at).isSame(this.date as MomentInput, 'day'),
       );
 
       if (completion) {
@@ -173,7 +175,7 @@ export default {
   },
 
   name: 'HomePage',
-};
+});
 </script>
 
 <style lang="scss" scoped>

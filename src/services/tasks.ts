@@ -1,7 +1,6 @@
 import axios from 'axios';
-
-import localStorageService from '@/services/localStorage';
-import api from '@/utils/api';
+import localStorageService from '~shared/services/localStorage';
+import api from '~shared/utils/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 

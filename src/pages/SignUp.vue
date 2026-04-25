@@ -65,10 +65,9 @@
 
 <script lang="ts">
 import { mapStores } from 'pinia';
-
-import userService from '@/services/user';
-import { useUserStore } from '@/stores/user';
-import UnauthLayout from '@/UnauthLayout.vue';
+import userService from '~shared/services/user';
+import { useUserStore } from '~shared/stores/user';
+import UnauthLayout from '~shared/UnauthLayout.vue';
 
 type SignUpPageState = {
   confirmPassword: string;

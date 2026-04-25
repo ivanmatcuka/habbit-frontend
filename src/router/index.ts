@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import { userStore } from '@/main';
 import AddPage from '@/pages/Add.vue';
 import EditPage from '@/pages/Edit.vue';
 import HabitsPage from '@/pages/Habits.vue';
@@ -9,6 +8,7 @@ import RecoverPasswordPage from '@/pages/RecoverPassword.vue';
 import SignInPage from '@/pages/SignIn.vue';
 import SignOutPage from '@/pages/SignOut.vue';
 import SignUpPage from '@/pages/SignUp.vue';
+import { useUserStore } from '@/stores/user';
 
 const router = createRouter({
   history: createWebHistory('/'),
@@ -35,6 +35,8 @@ const router = createRouter({
 const unauthRoutes = ['signin', 'signup', 'recover-password'];
 
 router.beforeEach((to, _, next) => {
+  const userStore = useUserStore();
+
   const isAuthRoute = unauthRoutes.includes(String(to.name));
   const isLoggedIn = userStore?.isLoggedIn;
 

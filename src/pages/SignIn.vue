@@ -1,6 +1,6 @@
 <template>
   <unauth-layout>
-    <b-form class="d-flex flex-column mt-5 gap-4" @submit="submit">
+    <b-form class="d-flex flex-column my-5 gap-4" @submit="submit">
       <h1 class="text-white">Sign In</h1>
 
       <!-- Email field -->
@@ -51,14 +51,14 @@
 
 <script lang="ts">
 import { mapStores } from 'pinia';
+import { defineComponent } from 'vue';
+import userService from '~shared/services/user';
+import { useUserStore } from '~shared/stores/user';
+import UnauthLayout from '~shared/UnauthLayout.vue';
 
-import userService from '@/services/user';
-import { useUserStore } from '@/stores/user';
-import UnauthLayout from '@/UnauthLayout.vue';
-
-type SignInPageState = {
+export type SignInPageState = {
   email: string;
-  error: {
+  error: null | {
     code?: string;
     errors?: Record<string, string[]>;
     message?: string;
@@ -68,7 +68,7 @@ type SignInPageState = {
   password: string;
 };
 
-export default {
+export default defineComponent({
   components: { UnauthLayout },
   computed: {
     ...mapStores(useUserStore),
@@ -77,7 +77,7 @@ export default {
   data(): SignInPageState {
     return {
       email: '',
-      error: {},
+      error: null,
       isLoading: false,
       password: '',
     };
@@ -92,7 +92,7 @@ export default {
       const { email, password } = this;
       const { data, error } = await userService.signIn(email, password);
 
-      this.error = error ?? {};
+      this.error = error ?? null;
       this.isLoading = false;
 
       if (data?.user) {
@@ -103,5 +103,5 @@ export default {
   },
 
   name: 'SignInPage',
-};
+});
 </script>

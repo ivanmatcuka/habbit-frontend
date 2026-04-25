@@ -6,9 +6,8 @@
 
 <script lang="ts">
 import { mapStores } from 'pinia';
-
-import { useUserStore } from '@/stores/user';
-import UnauthLayout from '@/UnauthLayout.vue';
+import { useUserStore } from '~shared/stores/user';
+import UnauthLayout from '~shared/UnauthLayout.vue';
 
 export default {
   components: { UnauthLayout },

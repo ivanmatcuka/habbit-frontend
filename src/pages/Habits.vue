@@ -34,8 +34,9 @@
 </template>
 
 <script lang="ts">
+import tasksService, { type Task } from '~shared/services/tasks';
+
 import AuthLayout from '@/AuthLayout.vue';
-import tasksService, { type Task } from '@/services/tasks';
 
 const OPTIONS = [
   { text: 1, value: 1 },

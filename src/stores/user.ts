@@ -1,34 +1,32 @@
-export type User = {
-  created_at?: string;
-  email: string;
-  email_verified_at?: null | string;
-  id?: number;
-  name: string;
-  password?: string;
-  remember_token?: null | string;
-  updated_at?: string;
-};
+import type { User } from '~shared/types/user';
 
 import { defineStore } from 'pinia';
+import localStorageService from '~shared/services/localStorage';
 
-import localStorageService from '@/services/localStorage';
+type StateDefinition = typeof initialState;
 
-export const useUserStore = defineStore('user', {
+const initialState = {
+  user: null as null | User,
+};
+
+const userStoreDefinition = {
   actions: {
-    clearUser() {
+    clearUser(this: StateDefinition) {
       this.user = null;
       localStorageService.removeAccessToken();
     },
-    setUser(user: User, accessToken: string) {
+    setUser(this: StateDefinition, user: User, accessToken: string) {
       this.user = user;
       localStorageService.setAccessToken(accessToken);
     },
   },
   getters: {
-    getUser: (state) => state.user,
-    isLoggedIn: (state) => !!state.user,
+    getUser: (state: StateDefinition) => state.user,
+    isLoggedIn: (state: StateDefinition) => !!state.user,
   },
-  state: () => ({
-    user: null as null | User,
-  }),
-});
+  state: () => initialState,
+};
+
+const useUserStore = defineStore('user', userStoreDefinition);
+
+export { userStoreDefinition, useUserStore };

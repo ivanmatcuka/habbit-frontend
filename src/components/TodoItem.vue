@@ -15,10 +15,9 @@
 
 <script lang="ts">
 import { type PropType } from 'vue';
-
-import CheckedCirclieIcon from '@/icons/CheckedCirclieIcon.vue';
-import CirclieIcon from '@/icons/CirclieIcon.vue';
-import { type Task } from '@/services/tasks';
+import CheckedCirclieIcon from '~shared/icons/CheckedCirclieIcon.vue';
+import CirclieIcon from '~shared/icons/CirclieIcon.vue';
+import { type Task } from '~shared/services/tasks';
 
 import RowItem from './RowItem.vue';
 

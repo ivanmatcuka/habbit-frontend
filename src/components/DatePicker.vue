@@ -12,11 +12,11 @@
 
 <script lang="ts">
 import moment from 'moment';
+import { defineComponent } from 'vue';
+import ChevronLeftIcon from '~shared/icons/ChevronLeftIcon.vue';
+import ChevronRightIcon from '~shared/icons/ChevronRightIcon.vue';
 
-import ChevronLeftIcon from '@/icons/ChevronLeftIcon.vue';
-import ChevronRightIcon from '@/icons/ChevronRightIcon.vue';
-
-export default {
+export default defineComponent({
   components: { ChevronLeftIcon, ChevronRightIcon },
 
   computed: {
@@ -45,5 +45,5 @@ export default {
       type: Object as () => ReturnType<typeof moment>,
     },
   },
-};
+});
 </script>

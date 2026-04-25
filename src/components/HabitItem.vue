@@ -1,18 +1,18 @@
 <template>
   <row-item>
     <!-- Content -->
-    <div v-if="task" class="d-flex flex-column">
-      <b-card-text class="text-white fs-4 mb-1">
+    <div v-if="task" class="d-flex flex-column gap-2">
+      <b-card-text class="text-white fs-4 mb-0">
         {{ task.title }}
       </b-card-text>
-      <b-card-text class="text-gray-100 fs-6">
+      <b-card-text class="text-secondary fs-6 mb-0">
         {{ getFrequencyString(task.frequency) }}
       </b-card-text>
     </div>
 
     <!-- Controls -->
     <div class="d-flex gap-1 flex-column align-items-center">
-      <b-button class="p-1" variant="link" :to="`/edit/${task?.id}`">
+      <b-button class="p-1" variant="link" :to="`/edit/${task?.id}`" aria-label="Edit">
         <edit-icon />
       </b-button>
 
@@ -24,7 +24,7 @@
         body-class="rounded-3 py-2 px-3"
       >
         <template #target>
-          <b-button class="p-1" variant="link" @click="modal = true">
+          <b-button class="p-1" variant="link" @click="modal = true" aria-label="Delete">
             <trash-icon />
           </b-button>
         </template>
@@ -38,6 +38,7 @@
             size="sm"
             loading-fill
             @click="confirmDelete"
+            aria-label="Confirm Delete"
             >Yes</b-button
           >
         </div>
@@ -48,11 +49,10 @@
 
 <script lang="ts">
 import { type PropType } from 'vue';
-
-import EditIcon from '@/icons/EditIcon.vue';
-import TrashIcon from '@/icons/TrashIcon.vue';
-import tasksService, { type Task } from '@/services/tasks';
-import { getFrequencyString } from '@/utils/getFrequencyString';
+import EditIcon from '~shared/icons/EditIcon.vue';
+import TrashIcon from '~shared/icons/TrashIcon.vue';
+import tasksService, { type Task } from '~shared/services/tasks';
+import { getFrequencyString } from '~shared/utils/getFrequencyString';
 
 export default {
   components: { EditIcon, TrashIcon },

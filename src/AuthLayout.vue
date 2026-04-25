@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import UserIcon from '@/icons/UserIcon.vue';
+import UserIcon from '~shared/icons/UserIcon.vue';
 
 export default {
   components: { UserIcon },

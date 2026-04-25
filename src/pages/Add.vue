@@ -111,11 +111,11 @@ export default {
 
       const { error } = await tasksService.createTask(data);
 
-      if (!error) {
-        await this.$router.push({
-          name: 'habits',
-        });
-      }
+      if (error) return;
+
+      await this.$router.push({
+        name: 'habits',
+      });
 
       this.isLoading = false;
     },

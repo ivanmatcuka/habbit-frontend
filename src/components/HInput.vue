@@ -44,8 +44,8 @@ export default {
       type: String,
     },
     error: {
-      required: true,
-      type: Object as PropType<{
+      required: false,
+      type: Object as PropType<null | {
         code?: string;
         errors?: Record<string, string[]>;
         message?: string;

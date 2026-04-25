@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
-
-import localStorageService from '@/services/localStorage';
-import api from '@/utils/api';
+import localStorageService from '~shared/services/localStorage';
+import api from '~shared/utils/api';
 
 export type LoginResponse = {
   access_token: string;
@@ -98,21 +97,16 @@ export default {
 
       return { data: response.data };
     } catch (error) {
-      console.error('Error signing in:', error);
-
       const { code, response } = error as AxiosError<{
         errors?: Record<string, string[]>;
         message?: string;
       }>;
 
-      const errors = response?.data ? response.data.errors : undefined;
-      const message = response?.data ? response.data.message : undefined;
-
       return {
         error: {
           code,
-          errors,
-          message,
+          errors: response?.data.errors,
+          message: response?.data?.message,
           status: response?.status,
         },
       };
