@@ -1,5 +1,5 @@
 <template>
-  <main id="app" class="w-100 p-2 d-flex flex-column justify-content-center align-items-stretch">
+  <main class="w-100 p-2 d-flex flex-column justify-content-center align-items-stretch">
     <slot />
   </main>
 </template>
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style scoped>
-#app {
+main {
   margin: auto;
   height: 100vh;
   max-width: 768px;

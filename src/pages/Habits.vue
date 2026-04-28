@@ -1,35 +1,39 @@
 <template>
   <auth-layout>
-    <div v-if="isLoading" class="d-flex flex-column gap-2 mb-6">
-      <h2 class="text-white">Loading...</h2>
-      <habit-item-placeholder v-for="value in Array(3).fill(0)" :key="value" />
-    </div>
-
-    <div v-else class="d-flex flex-column gap-4 mb-6">
-      <h2 class="text-white">Things</h2>
-
-      <div class="d-flex flex-column gap-2">
-        <h3 class="text-white">To Do</h3>
-        <habit-item
-          v-for="task in tasks.filter((task) => task.type === 'do')"
-          :key="task.id"
-          :task="task"
-          :on-delete="confirmDelete"
-        />
+    <div class="d-flex flex-column gap-6 mt-4">
+      <div v-if="isLoading" class="d-flex flex-column gap-2">
+        <h2 class="text-white">Loading...</h2>
+        <habit-item-placeholder v-for="value in Array(3).fill(0)" :key="value" />
       </div>
 
-      <div class="d-flex flex-column gap-2">
-        <h3 class="text-white">To Avoid</h3>
-        <habit-item
-          v-for="task in tasks.filter((task) => task.type === 'avoid')"
-          :key="task.id"
-          :task="task"
-          :on-delete="confirmDelete"
-        />
+      <div v-else class="d-flex flex-column gap-4">
+        <h2 class="text-white">Things</h2>
+
+        <div class="d-flex flex-column gap-2">
+          <h3 class="text-white">To Do</h3>
+          <habit-item
+            v-for="task in tasks.filter((task) => task.type === 'do')"
+            :key="task.id"
+            :task="task"
+            :on-delete="confirmDelete"
+          />
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+          <h3 class="text-white">To Avoid</h3>
+          <habit-item
+            v-for="task in tasks.filter((task) => task.type === 'avoid')"
+            :key="task.id"
+            :task="task"
+            :on-delete="confirmDelete"
+          />
+        </div>
+
+        <div>
+          <b-button variant="dark" to="/add">Add</b-button>
+        </div>
       </div>
     </div>
-
-    <b-button variant="dark" to="/add">Add</b-button>
   </auth-layout>
 </template>
 

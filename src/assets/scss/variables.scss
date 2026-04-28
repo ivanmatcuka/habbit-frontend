@@ -58,3 +58,11 @@ $font-family-sans-serif:
   'Segoe UI Emoji',
   'Segoe UI Symbol',
   'Noto Color Emoji' !default;
+
+$utilities: (
+  'position': (
+    property: position,
+    responsive: true,
+    values: static relative absolute fixed sticky,
+  ),
+);

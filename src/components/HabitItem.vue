@@ -1,7 +1,7 @@
 <template>
-  <row-item>
+  <row-item v-if="task">
     <!-- Content -->
-    <div v-if="task" class="d-flex flex-column gap-2">
+    <div class="d-flex flex-column gap-2">
       <b-card-text class="text-white fs-4 mb-0">
         {{ task.title }}
       </b-card-text>
@@ -12,7 +12,7 @@
 
     <!-- Controls -->
     <div class="d-flex gap-1 flex-column align-items-center">
-      <b-button class="p-1" variant="link" :to="`/edit/${task?.id}`" aria-label="Edit">
+      <b-button class="p-1" variant="link" :to="`/edit/${task.id}`" aria-label="Edit">
         <edit-icon />
       </b-button>
 

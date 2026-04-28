@@ -33,12 +33,12 @@
 </template>
 
 <script lang="ts">
-import userService from '@/services/user';
-import UnauthLayout from '@/UnauthLayout.vue';
+import userService from '~shared/services/user';
+import UnauthLayout from '~shared/UnauthLayout.vue';
 
 type RecoverPasswordPageState = {
   email: string;
-  error: {
+  error: null | {
     code?: string;
     errors?: Record<string, string[]>;
     message?: string;
@@ -52,7 +52,7 @@ export default {
   data(): RecoverPasswordPageState {
     return {
       email: '',
-      error: {},
+      error: null,
       isLoading: false,
       isSent: false,
     };

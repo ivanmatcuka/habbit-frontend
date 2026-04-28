@@ -1,60 +1,58 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <auth-layout>
-    <div class="d-flex flex-column gap-6">
+    <div class="d-flex flex-column gap-6 mt-4">
       <date-picker :date="date" @update:date="date = $event" />
 
-      <div class="mt-4">
-        <div v-if="isLoading" class="d-flex flex-column gap-2">
-          <h2 class="text-white">Loading...</h2>
-          <todo-item-placeholder v-for="value in Array(3).fill(0)" :key="value" />
-        </div>
+      <div v-if="isLoading" class="d-flex flex-column gap-2">
+        <h2 class="text-white">Loading...</h2>
+        <todo-item-placeholder v-for="value in Array(3).fill(0)" :key="value" />
+      </div>
 
-        <div v-else class="d-flex flex-column gap-8">
-          <div v-if="uncompletedTasks.length" class="d-flex flex-column gap-2">
-            <h2 class="text-white">To Do</h2>
-            <todo-item
-              v-for="task in uncompletedTasks"
-              :key="task.id"
-              :done="false"
-              :task="task"
-              :on-do="() => completeTask(task.id)"
-              :is-completing="isCompletingId === task.id"
-            />
-          </div>
-          <div v-if="completedTasks.length" class="d-flex flex-column gap-2">
-            <h2 class="text-white">Done!</h2>
-            <todo-item
-              v-for="task in completedTasks"
-              :key="task.id"
-              :done="true"
-              :task="task"
-              :on-do="() => uncompleteTask(task)"
-              :is-completing="isCompletingId === task.id"
-            />
-          </div>
-          <div v-if="uncavedTasks.length" class="d-flex flex-column gap-2">
-            <h2 class="text-white">To Avoid</h2>
-            <todo-item
-              v-for="task in uncavedTasks"
-              :key="task.id"
-              :done="false"
-              :task="task"
-              :on-do="() => completeTask(task.id)"
-              :is-completing="isCompletingId === task.id"
-            />
-          </div>
-          <div v-if="cavedTasks.length" class="d-flex flex-column gap-2">
-            <h2 class="text-white">Caved</h2>
-            <todo-item
-              v-for="task in cavedTasks"
-              :key="task.id"
-              :done="true"
-              :task="task"
-              :on-do="() => uncompleteTask(task)"
-              :is-completing="isCompletingId === task.id"
-            />
-          </div>
+      <div v-else class="d-flex flex-column gap-4 gap-md-8">
+        <div v-if="uncompletedTasks.length" class="d-flex flex-column gap-2">
+          <h2 class="text-white">To Do</h2>
+          <todo-item
+            v-for="task in uncompletedTasks"
+            :key="task.id"
+            :done="false"
+            :task="task"
+            :on-do="() => completeTask(task.id)"
+            :is-completing="isCompletingId === task.id"
+          />
+        </div>
+        <div v-if="completedTasks.length" class="d-flex flex-column gap-2">
+          <h2 class="text-white">Done!</h2>
+          <todo-item
+            v-for="task in completedTasks"
+            :key="task.id"
+            :done="true"
+            :task="task"
+            :on-do="() => uncompleteTask(task)"
+            :is-completing="isCompletingId === task.id"
+          />
+        </div>
+        <div v-if="uncavedTasks.length" class="d-flex flex-column gap-2">
+          <h2 class="text-white">To Avoid</h2>
+          <todo-item
+            v-for="task in uncavedTasks"
+            :key="task.id"
+            :done="false"
+            :task="task"
+            :on-do="() => completeTask(task.id)"
+            :is-completing="isCompletingId === task.id"
+          />
+        </div>
+        <div v-if="cavedTasks.length" class="d-flex flex-column gap-2">
+          <h2 class="text-white">Caved</h2>
+          <todo-item
+            v-for="task in cavedTasks"
+            :key="task.id"
+            :done="true"
+            :task="task"
+            :on-do="() => uncompleteTask(task)"
+            :is-completing="isCompletingId === task.id"
+          />
         </div>
       </div>
     </div>

@@ -88,6 +88,7 @@ export default defineComponent({
       event.preventDefault();
 
       this.isLoading = true;
+      this.error = null;
 
       const { email, password } = this;
       const { data, error } = await userService.signIn(email, password);
