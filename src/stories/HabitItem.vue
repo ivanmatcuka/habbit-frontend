@@ -25,7 +25,7 @@ import type { Task } from '@/services/tasks';
 import HabitItem from '@/components/HabitItem.vue';
 
 withDefaults(defineProps<{ task: Task }>(), {
-  task: initialTask,
+  // task: initialTask,
 });
 
 const emit = defineEmits<{
