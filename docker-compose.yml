@@ -3,9 +3,9 @@ networks:
     external: true
 
 services:
-  habits_app:
+  flatten_app:
     build: .
-    container_name: habits_app
+    container_name: flatten_app
     ports:
       - 4173
     restart: unless-stopped
