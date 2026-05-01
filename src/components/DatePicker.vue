@@ -1,5 +1,5 @@
 <template>
-  <nav class="d-flex align-items-center justify-content-between">
+  <nav class="d-flex align-items-center justify-content-between sticky-md-top bg-body">
     <b-button variant="outline-light" @click="goDayBack">
       <chevron-left-icon />
     </b-button>

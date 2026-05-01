@@ -1,5 +1,5 @@
 <template>
-  <main class="text-white m-auto d-flex flex-column py-md-8">
+  <main class="text-white m-auto d-flex flex-column py-md-8 min-vh-100">
     <nav
       class="d-flex gap-2 align-items-center px-2 justify-content-between sticky-bottom position-md-static pt-1 pb-4 p-md-0 bg-body w-100 order-2"
     >
@@ -14,7 +14,7 @@
         <b-dropdown-item to="/signout">Sign Out</b-dropdown-item>
       </b-dropdown>
     </nav>
-    <div class="order-1 px-2 order-md-2 py-4 py-0">
+    <div class="order-1 px-2 order-md-2 py-4 py-0 flex-grow-1">
       <slot />
     </div>
   </main>

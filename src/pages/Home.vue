@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <auth-layout>
     <div class="d-flex flex-column gap-6 mt-4">
