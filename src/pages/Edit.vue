@@ -100,6 +100,8 @@ export default {
 
       const { error } = await tasksService.updateTask(String(this.task.id), fields);
 
+      this.isLoading = false;
+
       if (error) {
         console.error('Failed to fetch tasks:', error);
         return;

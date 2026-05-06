@@ -1,13 +1,13 @@
 <template>
   <auth-layout>
-    <div class="d-flex flex-column gap-6 mt-4">
+    <div class="d-flex flex-column gap-6">
       <div v-if="isLoading" class="d-flex flex-column gap-2">
-        <h2 class="text-white">Loading...</h2>
+        <h1 class="text-white">Loading...</h1>
         <habit-item-placeholder v-for="value in Array(3).fill(0)" :key="value" />
       </div>
 
       <div v-else class="d-flex flex-column gap-4">
-        <h2 class="text-white">Things</h2>
+        <h1 class="text-white">Things</h1>
 
         <div class="d-flex flex-column gap-2">
           <h3 class="text-white">To Do</h3>
@@ -52,7 +52,7 @@ const OPTIONS = [
   { text: 7, value: 7 },
 ];
 
-type HabitsPageState = {
+export type HabitsPageState = {
   frequency: null | number;
   isLoading: boolean;
   modal: boolean;

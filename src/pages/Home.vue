@@ -1,6 +1,6 @@
 <template>
   <auth-layout>
-    <div class="d-flex flex-column gap-6 mt-4">
+    <div class="d-flex flex-column gap-4">
       <date-picker :date="date" @update:date="date = $event" />
 
       <div v-if="isLoading" class="d-flex flex-column gap-2">
