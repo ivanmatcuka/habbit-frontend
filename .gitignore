@@ -30,5 +30,6 @@ coverage
 *.tsbuildinfo
 
 .env
+.env.*
 *storybook.log
 storybook-static
