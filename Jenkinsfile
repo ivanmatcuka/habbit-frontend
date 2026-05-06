@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Deploy') {
+        stage('Lint') {
           steps {
-            echo 'Deploying....'
-            sh 'docker compose down'
-            sh 'docker compose up -d'
+            echo 'Linting....'
+            sh 'npm ci'
+            sh 'npm run lint'
           }
         }
     }
