@@ -1,5 +1,5 @@
 <template>
-  <main class="text-white m-auto d-flex flex-column py-md-8 min-vh-100">
+  <main class="text-white m-auto d-flex flex-column py-md-8 min-vh-100 gap-2 gap-md-4">
     <nav
       class="d-flex gap-2 align-items-center px-2 justify-content-between sticky-bottom position-md-static pt-1 pb-4 p-md-0 bg-body w-100 order-2"
     >
@@ -27,7 +27,10 @@ export default {
   components: { UserIcon },
   methods: {
     isActive(name: string) {
-      return this.$route.name === name;
+      const breadcrumbMatch = this.$route.meta.breadcrumb === name;
+      const nameMatch = this.$route.name === name;
+
+      return breadcrumbMatch || nameMatch;
     },
   },
 

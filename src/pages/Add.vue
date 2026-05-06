@@ -1,6 +1,6 @@
 <template>
   <auth-layout>
-    <b-form class="d-flex flex-column mt-5 gap-4" @submit="submit">
+    <b-form class="d-flex flex-column gap-4" @submit="submit">
       <h1 class="text-white">Add Task</h1>
 
       <!-- Title field -->
@@ -14,6 +14,7 @@
           v-model="title"
           class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
           placeholder="Enter title"
+          :disabled="isLoading"
           required
         />
       </b-form-group>
@@ -28,6 +29,7 @@
         <b-form-select
           v-model="frequency"
           :options="FREQUENCY_OPTIONS"
+          :disabled="isLoading"
           required
           class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
         />
@@ -43,13 +45,17 @@
         <b-form-select
           v-model="type"
           :options="TYPE_OPTIONS"
+          :disabled="isLoading"
           required
           class="px-3 rounded-1 py-2 lh-1 border-2 text-white"
         />
       </b-form-group>
 
-      <div>
+      <div class="d-flex gap-2 flex-wrap">
         <b-button type="submit" variant="dark" :loading="isLoading" loading-fill>Add</b-button>
+        <b-button type="button" variant="outline-light" :disabled="isLoading" to="/habits"
+          >Cancel</b-button
+        >
       </div>
     </b-form>
   </auth-layout>

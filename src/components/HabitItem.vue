@@ -12,7 +12,7 @@
 
     <!-- Controls -->
     <div class="d-flex gap-1 flex-column align-items-center">
-      <b-button class="p-1" variant="link" :to="`/edit/${task.id}`" aria-label="Edit">
+      <b-button class="p-1" variant="link" :to="`/habits/${task.id}/edit/`" aria-label="Edit">
         <edit-icon />
       </b-button>
 

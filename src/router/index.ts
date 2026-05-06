@@ -23,7 +23,7 @@ const router = createRouter({
       name: 'habits',
       path: '/habits',
     },
-    { component: EditPage, path: '/edit/:id' },
+    { component: EditPage, meta: { breadcrumb: 'habits' }, path: '/habits/:id/edit' },
     { component: AddPage, path: '/add' },
     { component: SignInPage, name: 'signin', path: '/signin' },
     { component: SignUpPage, name: 'signup', path: '/signup' },
